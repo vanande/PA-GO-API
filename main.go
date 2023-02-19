@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
+	"strings"
 )
 import _ "github.com/go-sql-driver/mysql"
 
@@ -17,7 +19,7 @@ func faq(w http.ResponseWriter, req *http.Request) {
 		var db *sql.DB
 
 		// Get the question from the C program
-		body, err := ioutil.ReadAll(req.Body)
+		body, _ := ioutil.ReadAll(req.Body)
 		question := string(body)
 		fmt.Println("Question received: ", question)
 
@@ -27,52 +29,58 @@ func faq(w http.ResponseWriter, req *http.Request) {
 		}
 
 		// Si la question contient des mots grossiers, on répond "Pas de gros mots"
-		if question == "merde" {
-			fmt.Fprintf(w, "Pas de gros mots")
-			return
-		}
 
+		// If the question contains bad words, we answer "No bad words"
+		// Define a regular expression pattern to match the word "merde"
+		badword := "(?i)merde" // the (?i) makes the regex case-insensitive
+
+		// Compile the regular expression
+		re := regexp.MustCompile(badword)
+
+		// Test whether a string matches the regular expression
+		match := re.MatchString(question)
+
+		if match {
+			fmt.Println("Bad words detected!")
+			fmt.Fprintf(w, "Bad words detected!")
+		}
 		// Connect to the database
 		db = connect(db)
 
-		// Query the database
-		rows, err := db.Query("SELECT answer FROM faq WHERE question = ?", question)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer rows.Close()
+		// Define the keywords to look for
+		keywords := []string{"how", "scam", "who", "Marc"}
 
-		var answer string
+		// Check if any of the keywords are in the input string
+		var found bool = false
+		for _, keyword := range keywords {
+			if strings.Contains(strings.ToLower(question), strings.ToLower(keyword)) {
+				// If a keyword is found, perform the first query to get the answer from the database
+				found = true
+				// Query the database
+				query := fmt.Sprintf("SELECT answer FROM faq WHERE LOWER(question) LIKE '%%%s%%'", keyword)
 
-		// Check if any rows were returned from the first query
-		if !rows.Next() {
-			// If no rows were returned, perform the second query to get all the questions in the database
-			rows, err = db.Query("SELECT question FROM faq")
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer rows.Close()
-			var questions string
-			for rows.Next() {
-				err := rows.Scan(&questions)
-				if err != nil {
-					log.Fatal(err)
+				// Query the database
+				rows, _ := db.Query(query)
+
+				defer rows.Close()
+
+				if rows.Next() {
+					var answer string
+					rows.Scan(&answer)
+					fmt.Printf("Answer: %s\n", answer)
+					fmt.Fprintf(w, "Answer: %s\n", answer)
+				} else {
+					fmt.Println("No matching answer found.")
+					fmt.Fprintln(w, "No matching answer found.")
 				}
-				answer += questions + "\n"
+				break
 			}
-			if answer == "" {
-				answer = "No match found, try this\n"
-			}
-		} else {
-			// Get the answer from the database
-			err := rows.Scan(&answer)
-			if err != nil {
-				log.Fatal(err)
-			}
-			// Send the answer to the C program
-			fmt.Fprintf(w, answer)
 		}
-		fmt.Println("Answer sent: ", answer)
+		fmt.Println("Found: ", found)
+
+		if !found {
+			fmt.Fprintf(w, "No matching answer found. Try these keywords: how, scam, who, Marc")
+		}
 	}
 }
 
@@ -108,10 +116,11 @@ func injectDataInDB(db *sql.DB) {
 		panic(err.Error())
 	}
 
-	db.Exec(`INSERT INTO faq(question, answer) VALUES ("How does it work?", "You pay me and I do the job")`)
-	db.Exec(`INSERT INTO faq(question, answer) VALUES ("Is it a scam?", "Realistically, no.")`)
-	db.Exec(`INSERT INTO faq(question, answer) VALUES ("Who are you?", "We are a team of 3 people.")`)
-	db.Exec(`INSERT INTO faq(question, answer) VALUES ("Is Marc in your team?", "Yes and she is the best!")`)
+	db.Exec(`INSERT INTO faq(question, answer) VALUES ("how does it work", "You pay me and I do the job")`)
+	db.Exec(`INSERT INTO faq(question, answer) VALUES ("why are you doing this", "Because pay me and I do the job")`)
+	db.Exec(`INSERT INTO faq(question, answer) VALUES ("is it a scam", "Realistically, no.")`)
+	db.Exec(`INSERT INTO faq(question, answer) VALUES ("who are you", "We are a team of 3 people.")`)
+	db.Exec(`INSERT INTO faq(question, answer) VALUES ("is Marc in your team", "Yes and she is the best!")`)
 
 	fmt.Println("SQL statements executed successfully")
 }
