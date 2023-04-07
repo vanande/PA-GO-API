@@ -86,7 +86,7 @@ func faq(w http.ResponseWriter, req *http.Request) {
 
 		// Send the question to the GRC server
 
-		response, err := askFlaskServer(question)
+		response, err := askToGrcServer(question)
 		if err != nil {
 			fmt.Println("Error: ", err)
 			fmt.Fprintf(w, "Error: %s", err)
@@ -128,7 +128,7 @@ func askToGrcServer(question string) (string, error) {
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	conn, err := ssh.Dial("tcp", "192.168.244.131:22", sshConfig)
+	conn, err := ssh.Dial("tcp", "192.168.237.129:22", sshConfig)
 	if err != nil {
 		return "", fmt.Errorf("Failed to dial: %s", err)
 	}
