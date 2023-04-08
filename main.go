@@ -1,14 +1,19 @@
 package main
 
 import (
-	db "TogetherAndStronger/routes/db/init"
+	"TogetherAndStronger/routes/db"
 	_ "strings"
 )
 import _ "github.com/go-sql-driver/mysql"
 
 func main() {
 
-	db.Main()
+	data := map[string]string{
+		"name":  "John",
+		"email": "john@example.com",
+	}
+
+	db.InsertQuery("users", data)
 
 	/*
 		// Start the server

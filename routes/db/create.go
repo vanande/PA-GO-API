@@ -1,54 +1,43 @@
 package db
 
 import (
-	"database/sql"
+	db2 "TogetherAndStronger/routes/db/init"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"strings"
 )
 
-// BuildInsertQuery builds an INSERT query from a map of data. It returns the query and the values to be inserted.
-func BuildInsertQuery(tableName string, data map[string]string) (q string, v []string) {
+func InsertQuery(tableName string, data map[string]string) {
 	var columns []string
-	var values []string
-	var placeholders []string
+	var values []interface{}
 
 	for col, val := range data {
 		columns = append(columns, col)
 		values = append(values, val)
-		placeholders = append(placeholders, "?")
 	}
 
-	query := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", tableName, strings.Join(columns, ", "), strings.Join(placeholders, ", "))
+	query := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", tableName, strings.Join(columns, ", "), strings.Trim(strings.Repeat("?,", len(columns)), ","))
 
-	return query, values
-}
-
-// ExecInsertQuery executes the INSERT query built from the given table name and data.
-// It returns the number of rows affected and an error if any.
-func ExecInsertQuery(db *sql.DB, tableName string, data map[string]string) (int64, error) {
-	query, stringValues := BuildInsertQuery(tableName, data)
-
-	values := make([]interface{}, len(stringValues))
-	for i, v := range stringValues {
-		values[i] = v
+	db, err := db2.InitDB()
+	if err != nil {
+		panic(err)
 	}
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		return 0, err
+		panic(err)
 	}
 	defer stmt.Close()
 
 	result, err := stmt.Exec(values...)
 	if err != nil {
-		return 0, err
+		panic(err)
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		return 0, err
+		panic(err)
 	}
 
-	return rowsAffected, nil
+	fmt.Printf("%d row(s) affected\n", rowsAffected)
 }
