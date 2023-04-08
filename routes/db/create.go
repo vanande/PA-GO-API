@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+// InsertQuery add a row to an existing table.
+//
+//	Example : db.InsertQuery("users", data := map[string]string{
+//			"name":  "Johnny",
+//			"email": "johnny@example.com",
+//		})
 func InsertQuery(tableName string, data map[string]string) {
 	var columns []string
 	var values []interface{}
