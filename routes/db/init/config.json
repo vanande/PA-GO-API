@@ -1,0 +1,8 @@
+{
+  "Dialect": "mysql",
+  "Hostname": "localhost",
+  "Port": 3306,
+  "Name": "TaS",
+  "Username": "root",
+  "Password": "rootroot"
+}
