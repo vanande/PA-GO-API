@@ -1,4 +1,4 @@
-package db
+package query
 
 import (
 	db2 "TogetherAndStronger/routes/db/init"
@@ -13,7 +13,7 @@ import (
 //			"name":  "Johnny",
 //			"email": "johnny@example.com",
 //		})
-func InsertQuery(tableName string, data map[string]string) {
+func InsertQuery(tableName string, data map[string]interface{}) error {
 	var columns []string
 	var values []interface{}
 
@@ -26,24 +26,25 @@ func InsertQuery(tableName string, data map[string]string) {
 
 	db, err := db2.InitDB()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer stmt.Close()
 
 	result, err := stmt.Exec(values...)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	fmt.Printf("%d row(s) affected\n", rowsAffected)
+	return nil
 }

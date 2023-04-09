@@ -1,4 +1,4 @@
-package db
+package query
 
 import (
 	db2 "TogetherAndStronger/routes/db/init"

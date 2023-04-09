@@ -1,4 +1,4 @@
-package db
+package query
 
 import (
 	"TogetherAndStronger/routes/db/init"
@@ -8,29 +8,30 @@ import (
 // DeleteQuery deletes a row from a table.
 //
 // Example : DeleteQuery("users", "id = ?", 1)
-func DeleteQuery(tableName string, condition string, values ...interface{}) {
+func DeleteQuery(tableName string, condition string, values ...interface{}) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE %s", tableName, condition)
 
 	db, err := db.InitDB()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer stmt.Close()
 
 	result, err := stmt.Exec(values...)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	fmt.Printf("%d row(s) affected\n", rowsAffected)
+	return nil
 }

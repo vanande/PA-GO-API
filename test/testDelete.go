@@ -1,12 +1,12 @@
 package main
 
 import (
-	"TogetherAndStronger/routes/db"
+	"TogetherAndStronger/routes/db/query"
 	_ "strings"
 )
 import _ "github.com/go-sql-driver/mysql"
 
 func main() {
 
-	db.DeleteQuery("users", "id = ?", 1)
+	query.DeleteQuery("users", "id = ?", 4)
 }

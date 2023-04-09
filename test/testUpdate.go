@@ -1,7 +1,7 @@
 package main
 
 import (
-	"TogetherAndStronger/routes/db"
+	"TogetherAndStronger/routes/db/query"
 )
 
 func main() {
@@ -13,11 +13,11 @@ func main() {
 
 	// Define where clause conditions
 	conditions := map[string]interface{}{
-		"id": 5,
+		"id": 2,
 	}
 
 	// Call update function
-	err := db.UpdateQuery(tableName, updateData, conditions)
+	err := query.UpdateQuery(tableName, updateData, conditions)
 	if err != nil {
 		panic(err)
 	}
