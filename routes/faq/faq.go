@@ -36,6 +36,7 @@ func Faq(w http.ResponseWriter, req *http.Request) {
 			// @TODO add it to the log
 		}
 
+		fmt.Println("Question: ", question)
 		response, err := askFlaskServer(question)
 		if err != nil {
 			fmt.Println("Error: ", err)

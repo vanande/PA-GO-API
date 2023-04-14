@@ -25,7 +25,7 @@ func askFlaskServer(question string) (string, error) {
 	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
-
+	fmt.Println(string(body))
 	var jsonResponse map[string]string
 	err = json.Unmarshal(body, &jsonResponse)
 	if err != nil {

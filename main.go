@@ -17,5 +17,6 @@ func main() {
 	http.HandleFunc("/db/select", api.Select)
 	http.HandleFunc("/db/update", api.Update)
 	http.HandleFunc("/db/delete", api.Delete)
-	http.ListenAndServe(":9000", nil)
+	// go run ..\..\go\go1.20.1\src\crypto\tls\generate_cert.go -host="127.0.0.1"
+	http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 }
