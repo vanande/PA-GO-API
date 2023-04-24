@@ -1,7 +1,7 @@
 package query
 
 import (
-	"TogetherAndStronger/routes/db/init"
+	db "TogetherAndStronger/routes/db/init"
 	"fmt"
 )
 

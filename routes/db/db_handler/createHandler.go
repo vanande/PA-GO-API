@@ -1,4 +1,4 @@
-package api
+package db_handler
 
 import (
 	"TogetherAndStronger/routes/db/query"

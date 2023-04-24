@@ -1,13 +1,12 @@
-package api
+package db_handler
 
 import (
 	"TogetherAndStronger/routes/db/query"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
-func Delete(w http.ResponseWriter, req *http.Request) {
+func Update(w http.ResponseWriter, req *http.Request) {
 	// Parse the request body into a map[string]interface{} object
 	var data map[string]interface{}
 	if err := json.NewDecoder(req.Body).Decode(&data); err != nil {
@@ -15,7 +14,7 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Extract the table name and filter from the request body
+	// Extract the table name, filter, and update data from the request body
 	tableName, ok := data["table"].(string)
 	if !ok {
 		http.Error(w, "missing or invalid 'table' parameter", http.StatusBadRequest)
@@ -28,24 +27,22 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Convert the filter map into a string representation
-	var filterStr string
-	for k, v := range filter {
-		filterStr += fmt.Sprintf("%s='%v' AND ", k, v)
+	updateData, ok := data["data"].(map[string]interface{})
+	if !ok {
+		http.Error(w, "missing or invalid 'data' parameter", http.StatusBadRequest)
+		return
 	}
-	filterStr = filterStr[:len(filterStr)-5] // remove the trailing "AND "
 
-	// Call the DeleteQuery function with the table name and filter
-	err := query.DeleteQuery(tableName, filterStr)
+	// Call the UpdateQuery function with the table name, filter, and update data
+	err := query.UpdateQuery(tableName, filter, updateData)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// Return a JSON response with a success message and data
-	response := map[string]interface{}{
-		"message": "successfully deleted",
-	}
+	// Write a success response with a JSON message
+	response := make(map[string]string)
+	response["message"] = "Successfully updated the record(s)."
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
