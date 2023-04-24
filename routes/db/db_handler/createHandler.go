@@ -28,7 +28,7 @@ func Create(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// Call the CreateQuery function with the table name and create data
-	err := query.InsertQuery(tableName, createData)
+	_, err := query.InsertQuery(tableName, createData)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -4,6 +4,7 @@ import (
 	db2 "TogetherAndStronger/routes/db/init"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"html"
 	"strings"
 )
 
@@ -13,7 +14,7 @@ import (
 //			"name":  "Johnny",
 //			"email": "johnny@example.com",
 //		})
-func InsertQuery(tableName string, data map[string]interface{}) error {
+func InsertQuery(tableName string, data map[string]interface{}) (int, error) {
 	var columns []string
 	var values []interface{}
 
@@ -26,25 +27,35 @@ func InsertQuery(tableName string, data map[string]interface{}) error {
 
 	db, err := db2.InitDB()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
+	fmt.Println(html.EscapeString(query))
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		return err
+		fmt.Println(err)
+		return 0, err
 	}
 	defer stmt.Close()
 
+	fmt.Println(values)
 	result, err := stmt.Exec(values...)
 	if err != nil {
-		return err
+		fmt.Println(err)
+		return 0, err
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		return err
+		fmt.Println(err)
+		return 0, err
+	}
+
+	lastInsertId, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
 	}
 
 	fmt.Printf("%d row(s) affected\n", rowsAffected)
-	return nil
+	return int(lastInsertId), nil
 }

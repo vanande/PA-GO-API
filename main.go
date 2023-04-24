@@ -4,6 +4,7 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/faq"
+	"TogetherAndStronger/routes/signup"
 	"net/http"
 	_ "strings"
 )
@@ -18,6 +19,11 @@ func main() {
 	http.HandleFunc("/db/update", db_handler.Update)
 	http.HandleFunc("/db/delete", db_handler.Delete)
 	http.HandleFunc("/auth/LoginCompany", auth.LoginCompany)
+	http.HandleFunc("/auth/LoginPresta", auth.LoginPresta)
+	http.HandleFunc("/auth/LoginSalary", auth.LoginSalary)
+	http.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
+	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
+	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
 	// go run ..\..\go\go1.20.1\src\crypto\tls\generate_cert.go -host="127.0.0.1"
 	err := http.ListenAndServe(":9000", nil)
 	if err != nil {

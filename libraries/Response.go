@@ -5,10 +5,13 @@ import (
 	"net/http"
 )
 
-func Response(w http.ResponseWriter, message string, code int) {
-	response := map[string]interface{}{
-		"message": message,
+func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
+
+	response := map[string]interface{}{}
+	for key, value := range message {
+		response[key] = value
 	}
+
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

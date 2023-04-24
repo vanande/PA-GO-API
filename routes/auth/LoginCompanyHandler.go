@@ -21,7 +21,10 @@ func LoginCompany(w http.ResponseWriter, req *http.Request) {
 		defer selectQuery.Close()
 
 		if !selectQuery.Next() {
-			libraries.Response(w, "Invalid data", http.StatusNotFound)
+			message := map[string]interface{}{
+				"message": "Invalid data",
+			}
+			libraries.Response(w, message, http.StatusNotFound)
 			return
 		} else {
 			var id int
@@ -30,7 +33,11 @@ func LoginCompany(w http.ResponseWriter, req *http.Request) {
 				return
 			}
 			println(id)
-			libraries.Response(w, "Successfully logged in", http.StatusOK)
+			message := map[string]interface{}{
+				"message": "Successfully logged in",
+				"id":      id,
+			}
+			libraries.Response(w, message, http.StatusOK)
 		}
 	}
 }
