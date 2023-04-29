@@ -37,7 +37,7 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 				"idp":     idp,
 				"idc":     idc,
 				"ide":     ide,
-			}, http.StatusNotFound)
+			}, http.StatusOK)
 		}
 	}
 }
