@@ -3,6 +3,7 @@ package auth
 import (
 	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/db/query"
+	"fmt"
 	"net/http"
 )
 
@@ -11,11 +12,11 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 
 	case "POST":
 		data := libraries.Body(w, req)
-		println(data["token"])
+		fmt.Println(data["token"])
 
 		selectQuery, err := query.SelectQuery("participant", []string{"idPARTICIPANT", "idCLIENT", "idEQUIPE"}, map[string]interface{}{"token": data["token"]})
 		if err != nil {
-			return
+			fmt.Println(w, err)
 		}
 		defer selectQuery.Close()
 
@@ -28,9 +29,9 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 			var idp, idc, ide int
 			err = selectQuery.Scan(&idp, &idc, &ide)
 			if err != nil {
+				fmt.Println(err)
 				return
 			}
-			println(idp, idc, ide)
 			libraries.Response(w, map[string]interface{}{
 				"message": "Successfully logged in",
 				"idp":     idp,

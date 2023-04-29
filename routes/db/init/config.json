@@ -2,7 +2,7 @@
   "Dialect": "mysql",
   "Hostname": "localhost",
   "Port": 3306,
-  "Name": "TaS",
+  "Name": "tas",
   "Username": "root",
   "Password": "rootroot"
 }
