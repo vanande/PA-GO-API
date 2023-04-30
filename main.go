@@ -4,13 +4,14 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/faq"
+	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
 	"net/http"
 	_ "strings"
 )
 
-func hello(w http.ResponseWriter, req *http.Request){
+func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Best angular website of the century incoming... ")
 	fmt.Println("Got one")
 }
@@ -33,10 +34,8 @@ func main() {
 	http.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
 	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
 	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
+	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
 	// go run ..\..\go\go1.20.1\src\crypto\tls\generate_cert.go -host="127.0.0.1"
-	//http.ListenAndServe(":9000", nil)
-	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
-	if err != nil {
-		panic(err)
-	}
+	http.ListenAndServe(":9000", nil)
+	//err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 }
