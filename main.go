@@ -18,7 +18,6 @@ func hello(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	//db.Main()
 
 	fmt.Println("Server starting...")
 
@@ -37,8 +36,13 @@ func main() {
 	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
 	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
 	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
+	http.HandleFunc("/lookfor/LookForCompany", lookfor.LookForCompany)
+	//	http.HandleFunc("/lookfor/LookForPresta", lookfor.LookForPresta)
 	http.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
+	http.HandleFunc("/salary/addInfo", salary.AddSalaryInfo)
+	http.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
 	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
+	http.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 	if err != nil {
 		panic(err)
