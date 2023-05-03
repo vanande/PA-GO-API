@@ -3,14 +3,16 @@ package main
 import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
+	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
+	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
 	"net/http"
 	_ "strings"
 )
 
-func hello(w http.ResponseWriter, req *http.Request){
+func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Best angular website of the century incoming... ")
 	fmt.Println("Got one")
 }
@@ -21,6 +23,7 @@ func main() {
 	fmt.Println("Server starting...")
 
 	// Start the server
+	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/faq", faq.Faq)
 	http.HandleFunc("/db/create", db_handler.Create)
@@ -33,8 +36,9 @@ func main() {
 	http.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
 	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
 	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
-	// go run ..\..\go\go1.20.1\src\crypto\tls\generate_cert.go -host="127.0.0.1"
-	//http.ListenAndServe(":9000", nil)
+	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
+	http.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
+	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 	if err != nil {
 		panic(err)

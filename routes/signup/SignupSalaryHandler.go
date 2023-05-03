@@ -48,7 +48,6 @@ func SignupSalary(w http.ResponseWriter, req *http.Request) {
 			"age":       data["age"],
 			"sexe":      data["sexe"],
 			"idCLIENT":  data["idCLIENT"],
-			"idEQUIPE":  data["idEQUIPE"],
 		})
 		if err != nil {
 			libraries.Response(w, map[string]interface{}{

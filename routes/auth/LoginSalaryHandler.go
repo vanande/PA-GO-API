@@ -14,7 +14,7 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 		data := libraries.Body(w, req)
 		fmt.Println(data["token"])
 
-		selectQuery, err := query.SelectQuery("participant", []string{"idPARTICIPANT", "idCLIENT", "idEQUIPE"}, map[string]interface{}{"token": data["token"]})
+		selectQuery, err := query.SelectQuery("participant", []string{"idPARTICIPANT", "idCLIENT", "nom", "prenom"}, map[string]interface{}{"token": data["token"]})
 		if err != nil {
 			fmt.Println(w, err)
 		}
@@ -26,8 +26,9 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 			}, http.StatusNotFound)
 			return
 		} else {
-			var idp, idc, ide int
-			err = selectQuery.Scan(&idp, &idc, &ide)
+			var idp, idc int
+			var nom, prenom string
+			err = selectQuery.Scan(&idp, &idc, &nom, &prenom)
 			if err != nil {
 				fmt.Println(err)
 				return
@@ -36,8 +37,9 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 				"message": "Successfully logged in",
 				"idp":     idp,
 				"idc":     idc,
-				"ide":     ide,
-			}, http.StatusNotFound)
+				"nom":     nom,
+				"prenom":  prenom,
+			}, http.StatusOK)
 		}
 	}
 }
