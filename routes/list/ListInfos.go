@@ -21,23 +21,18 @@ func ListInfos(w http.ResponseWriter, req *http.Request) {
 		}
 		defer selectQuery.Close()
 
-		if !selectQuery.Next() {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Invalid data",
-			}, http.StatusNotFound)
-			return
-		} else {
+		rows := []map[string]interface{}{}
+		for selectQuery.Next() {
 			columns, _ := selectQuery.Columns()
 			values := make([]interface{}, len(columns))
 			scanArgs := make([]interface{}, len(values))
 			for i := range values {
 				scanArgs[i] = &values[i]
-				fmt.Println("scanargs ", i, " ", scanArgs[i])
 			}
 			err = selectQuery.Scan(scanArgs...)
 			if err != nil {
 				fmt.Println(err)
-				return
+				continue
 			}
 
 			row := make(map[string]interface{})
@@ -49,16 +44,21 @@ func ListInfos(w http.ResponseWriter, req *http.Request) {
 					default:
 						row[columns[i]] = v
 					}
-					fmt.Printf("%s: %v\n", columns[i], row[columns[i]])
 				}
 			}
-
-			fmt.Println("row=", row)
-
-			libraries.Response(w, map[string]interface{}{
-				"message": "Successfully fetched data",
-				"data":    row,
-			}, http.StatusOK)
+			rows = append(rows, row)
 		}
+
+		if len(rows) == 0 {
+			libraries.Response(w, map[string]interface{}{
+				"message": "Invalid data",
+			}, http.StatusNotFound)
+			return
+		}
+
+		libraries.Response(w, map[string]interface{}{
+			"message": "Successfully fetched data",
+			"data":    rows,
+		}, http.StatusOK)
 	}
 }

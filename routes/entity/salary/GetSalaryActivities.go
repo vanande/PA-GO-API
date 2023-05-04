@@ -16,6 +16,10 @@ type ListActivite struct {
 	NbPersonneMax string
 	PrixMin       string
 	PrixMax       string
+    HeureDebut string
+    HeureFin string
+    DateDebut string
+    DateFin string
 	Image         string
 }
 
@@ -37,7 +41,22 @@ func GetSalaryActivities(w http.ResponseWriter, req *http.Request) {
 			}, http.StatusOK)
 			return
 		}
-		query := fmt.Sprintf("SELECT list_activite.* FROM participant_equipe JOIN teambuilding_activite ON participant_equipe.idTEAM_BUILDING = teambuilding_activite.idTEAM_BUILDING JOIN activite ON teambuilding_activite.idActivite = activite.idActivite JOIN list_activite ON activite.idlist_activite = list_activite.idlist_activite WHERE participant_equipe.idPARTICIPANT = %s AND participant_equipe.idCLIENT = %s", data["idp"], data["idc"])
+		query := fmt.Sprintf(`
+			SELECT 
+				list_activite.*, 
+				teambuilding_activite.heure_debut, 
+				teambuilding_activite.heure_fin, 
+				teambuilding_activite.date_debut, 
+				teambuilding_activite.date_fin 
+			FROM 
+				participant_equipe 
+				JOIN teambuilding_activite ON participant_equipe.idTEAM_BUILDING = teambuilding_activite.idTEAM_BUILDING 
+				JOIN activite ON teambuilding_activite.idActivite = activite.idActivite 
+				JOIN list_activite ON activite.idlist_activite = list_activite.idlist_activite 
+			WHERE 
+				participant_equipe.idPARTICIPANT = %s 
+				AND participant_equipe.idCLIENT = %s`,
+			data["idp"], data["idc"])
 		fmt.Println(html.EscapeString(query))
 
 		db, err := dbinit.InitDB()
@@ -56,7 +75,7 @@ func GetSalaryActivities(w http.ResponseWriter, req *http.Request) {
 
 		for rows.Next() {
 			var la ListActivite
-			err := rows.Scan(&la.ID, &la.Nom, &la.Description, &la.NbPersonneMin, &la.NbPersonneMax, &la.PrixMin, &la.PrixMax, &la.Image)
+			err := rows.Scan(&la.ID, &la.Nom, &la.Description, &la.NbPersonneMin, &la.NbPersonneMax, &la.PrixMin, &la.PrixMax, &la.Image, &la.HeureDebut, &la.HeureFin, &la.DateDebut, &la.DateFin)
 			if err != nil {
 				fmt.Println(err)
 			}

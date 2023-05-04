@@ -5,6 +5,7 @@ import (
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
+	"TogetherAndStronger/routes/list"
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
@@ -43,6 +44,7 @@ func main() {
 	http.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
 	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	http.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
+	http.HandleFunc("/list/infos", list.ListInfos)
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 	if err != nil {
 		panic(err)
