@@ -21,8 +21,7 @@ func SignupCompany(w http.ResponseWriter, req *http.Request) {
 			data["telephone"] == nil ||
 			data["password"] == nil ||
 			data["adresse"] == nil ||
-			data["raison_sociale"] == nil ||
-			data["statut"] == nil {
+			data["raison_sociale"] == nil {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Missing data",
 			}, http.StatusBadRequest)
@@ -45,7 +44,6 @@ func SignupCompany(w http.ResponseWriter, req *http.Request) {
 			"password":           data["password"],
 			"adresse":            data["adresse"],
 			"raison_sociale":     data["raison_sociale"],
-			"statut":             data["statut"],
 			"creation_du_compte": time.Now(),
 			"pts_fidelite":       "0",
 		})

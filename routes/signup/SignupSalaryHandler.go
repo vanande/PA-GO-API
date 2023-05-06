@@ -21,7 +21,7 @@ func SignupSalary(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		if data["nom"] == nil || data["prenom"] == nil || data["telephone"] == nil || data["age"] == nil || data["sexe"] == nil || data["idCLIENT"] == nil || data["idEQUIPE"] == nil {
+		if data["nom"] == nil || data["prenom"] == nil || data["telephone"] == nil || data["age"] == nil || data["sexe"] == nil || data["idCLIENT"] == nil {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Missing data",
 			}, http.StatusBadRequest)
@@ -33,8 +33,7 @@ func SignupSalary(w http.ResponseWriter, req *http.Request) {
 			!libraries.Correct(data["telephone"].(string), "telephone") ||
 			!libraries.Correct(data["age"].(string), "age") ||
 			!libraries.Correct(data["sexe"].(string), "sexe") ||
-			!libraries.Correct(data["idCLIENT"].(string), "idCLIENT") ||
-			!libraries.Correct(data["idEQUIPE"].(string), "idEQUIPE") {
+			!libraries.Correct(data["idCLIENT"].(string), "idCLIENT") {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid data",
 			}, http.StatusBadRequest)
@@ -57,13 +56,20 @@ func SignupSalary(w http.ResponseWriter, req *http.Request) {
 		}
 
 		idc, _ := strconv.Atoi(data["idCLIENT"].(string))
-		ide, _ := strconv.Atoi(data["idEQUIPE"].(string))
 
-		token := lastInsertId*100 + idc*10 + ide
+		token := lastInsertId*100 + idc*10
 
-		_, err = query.InsertQuery("participant", map[string]interface{}{
+		err = query.UpdateQuery("participant", map[string]interface{}{
 			"token": token,
+		}, map[string]interface{}{
+			"idParticipant": lastInsertId,
 		})
+		if err != nil {
+			libraries.Response(w, map[string]interface{}{
+				"message": "No token for you : " + err.Error(),
+			}, http.StatusBadRequest)
+			return
+		}
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "Salary " + data["nom"].(string) + " " + data["prenom"].(string) + " successfully signed up",

@@ -23,7 +23,7 @@ func main() {
 	fmt.Println("Server starting...")
 
 	// Start the server
-	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
+	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/faq", faq.Faq)
 	http.HandleFunc("/db/create", db_handler.Create)
