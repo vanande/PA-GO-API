@@ -8,6 +8,7 @@ import (
 	"TogetherAndStronger/routes/list"
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
+	"github.com/rs/cors"
 	"fmt"
 	"net/http"
 	_ "strings"
@@ -20,32 +21,39 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
+    mux := http.NewServeMux()
+
+
 	fmt.Println("Server starting...")
 
 	// Start the server
-	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
-	http.HandleFunc("/hello", hello)
-	http.HandleFunc("/faq", faq.Faq)
-	http.HandleFunc("/db/create", db_handler.Create)
-	http.HandleFunc("/db/select", db_handler.Select)
-	http.HandleFunc("/db/update", db_handler.Update)
-	http.HandleFunc("/db/delete", db_handler.Delete)
-	http.HandleFunc("/auth/LoginCompany", auth.LoginCompany)
-	http.HandleFunc("/auth/LoginPresta", auth.LoginPresta)
-	http.HandleFunc("/auth/LoginSalary", auth.LoginSalary)
-	http.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
-	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
-	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
-	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
-	http.HandleFunc("/lookfor/LookForCompany", lookfor.LookForCompany)
-	//	http.HandleFunc("/lookfor/LookForPresta", lookfor.LookForPresta)
-	http.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
-	http.HandleFunc("/salary/addInfo", salary.AddSalaryInfo)
-	http.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
-	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
-	http.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
-	http.HandleFunc("/list/infos", list.ListInfos)
-	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
+	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
+	mux.HandleFunc("/hello", hello)
+	mux.HandleFunc("/faq", faq.Faq)
+	mux.HandleFunc("/db/create", db_handler.Create)
+	mux.HandleFunc("/db/select", db_handler.Select)
+	mux.HandleFunc("/db/update", db_handler.Update)
+	mux.HandleFunc("/db/delete", db_handler.Delete)
+	mux.HandleFunc("/auth/LoginCompany", auth.LoginCompany)
+	mux.HandleFunc("/auth/LoginPresta", auth.LoginPresta)
+	mux.HandleFunc("/auth/LoginSalary", auth.LoginSalary)
+	mux.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
+	mux.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
+	mux.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
+	mux.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
+	mux.HandleFunc("/lookfor/LookForCompany", lookfor.LookForCompany)
+	//	mux.HandleFunc("/lookfor/LookForPresta", lookfor.LookForPresta)
+	mux.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
+	mux.HandleFunc("/salary/addInfo", salary.AddSalaryInfo)
+	mux.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
+	mux.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
+	mux.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
+	mux.HandleFunc("/list/infos", list.ListInfos)
+	mux.HandleFunc("/list/activity", list.ListActivities)
+
+    handler := cors.Default().Handler(mux)
+
+	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
 	if err != nil {
 		panic(err)
 	}
