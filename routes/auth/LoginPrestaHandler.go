@@ -3,12 +3,14 @@ package auth
 import (
 	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/db/query"
+	"fmt"
 	"net/http"
 )
 
 func LoginPresta(w http.ResponseWriter, req *http.Request) {
-	switch req.Method {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
+	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
 		println(data["email"])
@@ -22,7 +24,7 @@ func LoginPresta(w http.ResponseWriter, req *http.Request) {
 		if !selectQuery.Next() {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid data",
-			}, http.StatusNotFound)
+			}, http.StatusUnauthorized)
 			return
 		} else {
 			var id int
@@ -31,10 +33,18 @@ func LoginPresta(w http.ResponseWriter, req *http.Request) {
 				return
 			}
 			println(id)
+
+			role := "prestataire"
+			token, err := libraries.CreateToken(role, id)
+			if err != nil {
+				fmt.Errorf("Error while generating token: %v", err)
+			}
+
 			libraries.Response(w, map[string]interface{}{
 				"message": "Successfully logged in",
 				"id":      id,
-			}, http.StatusNotFound)
+				"token":   token,
+			}, http.StatusOK)
 		}
 	}
 }

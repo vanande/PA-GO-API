@@ -3,6 +3,7 @@ package main
 import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
+	"TogetherAndStronger/routes/entity/activity"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
 	"TogetherAndStronger/routes/list"
@@ -20,10 +21,12 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
+	mux := http.NewServeMux()
+
 	fmt.Println("Server starting...")
 
 	// Start the server
-	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
+	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/faq", faq.Faq)
 	http.HandleFunc("/db/create", db_handler.Create)
@@ -45,6 +48,10 @@ func main() {
 	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	http.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
 	http.HandleFunc("/list/infos", list.ListInfos)
+	http.HandleFunc("/activity/addActivity", activity.AddActivity)
+	http.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
+	http.HandleFunc("/activity/getActivity", activity.GetActivity)
+	http.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 	if err != nil {
 		panic(err)

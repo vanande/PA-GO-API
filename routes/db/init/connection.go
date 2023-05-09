@@ -7,7 +7,7 @@ import (
 
 // InitDB initializes the database connection.
 func InitDB() (*sql.DB, error) {
-	config, err := LoadConfig("/home/debian/go/TogetherAndStronger/routes/db/init/config.json")
+	config, err := LoadConfig("C:\\Users\\me\\GolandProjects\\TogetherAndStronger\\routes\\db\\init\\config.json")
 	if err != nil {
 		return nil, err
 	}

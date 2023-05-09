@@ -17,7 +17,7 @@ func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8	")
 	w.WriteHeader(code)
 	w.Write(jsonResponse)
 }
