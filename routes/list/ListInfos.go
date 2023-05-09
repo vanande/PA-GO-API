@@ -21,35 +21,35 @@ func ListInfos(w http.ResponseWriter, req *http.Request) {
 		}
 		defer selectQuery.Close()
 
-		rows := []map[string]interface{}{}
+		dataRows := []map[string]interface{}{}
 		for selectQuery.Next() {
-			columns, _ := selectQuery.Columns()
-			values := make([]interface{}, len(columns))
-			scanArgs := make([]interface{}, len(values))
-			for i := range values {
-				scanArgs[i] = &values[i]
+			columnNames, _ := selectQuery.Columns()
+			columnValues := make([]interface{}, len(columnNames))
+			valuePointers := make([]interface{}, len(columnValues))
+			for i := range columnValues {
+				valuePointers[i] = &columnValues[i]
 			}
-			err = selectQuery.Scan(scanArgs...)
+			err = selectQuery.Scan(valuePointers...)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 
-			row := make(map[string]interface{})
-			for i, col := range values {
-				if col != nil {
-					switch v := col.(type) {
+			dataRow := make(map[string]interface{})
+			for i, val := range columnValues {
+				if val != nil {
+					switch v := val.(type) {
 					case []byte:
-						row[columns[i]] = string(v)
+						dataRow[columnNames[i]] = string(v)
 					default:
-						row[columns[i]] = v
+						dataRow[columnNames[i]] = v
 					}
 				}
 			}
-			rows = append(rows, row)
+			dataRows = append(dataRows, dataRow)
 		}
 
-		if len(rows) == 0 {
+		if len(dataRows) == 0 {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid data",
 			}, http.StatusNotFound)
@@ -58,7 +58,7 @@ func ListInfos(w http.ResponseWriter, req *http.Request) {
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "Successfully fetched data",
-			"data":    rows,
+			"data":    dataRows,
 		}, http.StatusOK)
 	}
 }
