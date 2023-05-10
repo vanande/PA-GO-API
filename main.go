@@ -4,6 +4,9 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
+	"TogetherAndStronger/routes/entity/company"
+	"TogetherAndStronger/routes/entity/place"
+	"TogetherAndStronger/routes/entity/prestataire"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
 	"TogetherAndStronger/routes/list"
@@ -50,11 +53,27 @@ func main() {
 	mux.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	mux.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
 	mux.HandleFunc("/list/infos", list.ListInfos)
+	mux.HandleFunc("/list/activity", list.ListActivities)
+
 	mux.HandleFunc("/activity/addActivity", activity.AddActivity)
 	mux.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
 	mux.HandleFunc("/activity/getActivity", activity.GetActivity)
 	mux.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
-	mux.HandleFunc("/activity", list.ListActivities)
+
+	mux.HandleFunc("/place/addPlace", place.AddPlace)
+	mux.HandleFunc("/place/deletePlace", place.DeletePlace)
+	mux.HandleFunc("/place/getPlace", place.GetPlace)
+	mux.HandleFunc("/place/updatePlace", place.UpdatePlace)
+
+	mux.HandleFunc("/presta/addPresta", prestataire.AddPresta)
+	mux.HandleFunc("/presta/deletePresta", prestataire.DeletePresta)
+	mux.HandleFunc("/presta/getPresta", prestataire.GetPresta)
+	mux.HandleFunc("/presta/updatePresta", prestataire.UpdatePresta)
+
+	mux.HandleFunc("/company/addCompany", company.AddCompany)
+	mux.HandleFunc("/company/deleteCompany", company.DeleteCompany)
+	mux.HandleFunc("/company/getCompany", company.GetCompany)
+	mux.HandleFunc("/company/updateCompany", company.UpdateCompany)
 
 	handler := cors.Default().Handler(mux)
 
