@@ -3,15 +3,17 @@ package main
 import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
+	"TogetherAndStronger/routes/entity/activity"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
 	"TogetherAndStronger/routes/list"
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
-	"github.com/rs/cors"
 	"fmt"
 	"net/http"
 	_ "strings"
+
+	"github.com/rs/cors"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -21,8 +23,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-    mux := http.NewServeMux()
-
+	mux := http.NewServeMux()
 
 	fmt.Println("Server starting...")
 
@@ -49,9 +50,13 @@ func main() {
 	mux.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	mux.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
 	mux.HandleFunc("/list/infos", list.ListInfos)
-	mux.HandleFunc("/list/activity", list.ListActivities)
+	mux.HandleFunc("/activity/addActivity", activity.AddActivity)
+	mux.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
+	mux.HandleFunc("/activity/getActivity", activity.GetActivity)
+	mux.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
+	mux.HandleFunc("/activity", list.ListActivities)
 
-    handler := cors.Default().Handler(mux)
+	handler := cors.Default().Handler(mux)
 
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
 	if err != nil {
