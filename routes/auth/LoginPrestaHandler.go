@@ -7,16 +7,16 @@ import (
 	"net/http"
 )
 
-// func enableCors(w *http.ResponseWriter) {
-// 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-// }
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
 
 func LoginPresta(w http.ResponseWriter, req *http.Request) {
 
 	switch req.Method {
 	case "POST":
 
-		// enableCors(&w)
+		enableCors(&w)
 
 		data := libraries.Body(w, req)
 		println(data["email"])

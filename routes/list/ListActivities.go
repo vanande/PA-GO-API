@@ -7,10 +7,15 @@ import (
 	"net/http"
 )
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func ListActivities(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
 	case "POST":
+		enableCors(&w)
 		selectQuery, err := query.SelectQuery("list_activite", []string{"*"}, map[string]interface{}{})
 		if err != nil {
 			fmt.Println(w, err)
@@ -60,5 +65,9 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 			"message": "Successfully fetched data",
 			"data":    rows,
 		}, http.StatusOK)
+
+	case "OPTIONS":
+		fmt.Println("Preflight handled")
+		w.WriteHeader(http.StatusOK)
 	}
 }
