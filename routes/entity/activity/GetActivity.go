@@ -36,6 +36,7 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 			}, http.StatusBadRequest)
 			return
 		}
+
 		rows, err := query.SelectQuery("list_activite", []string{"*"}, map[string]interface{}{"idlist_activite": data["id"]})
 		if err != nil {
 			fmt.Errorf("Select failed : %v", err)
