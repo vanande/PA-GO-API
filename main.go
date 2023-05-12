@@ -6,11 +6,13 @@ import (
 	"TogetherAndStronger/routes/entity/activity"
 	"TogetherAndStronger/routes/entity/category"
 	"TogetherAndStronger/routes/entity/company"
+	"TogetherAndStronger/routes/entity/material"
 	"TogetherAndStronger/routes/entity/option"
 	"TogetherAndStronger/routes/entity/place"
 	"TogetherAndStronger/routes/entity/prestataire"
 	"TogetherAndStronger/routes/entity/room"
 	"TogetherAndStronger/routes/entity/salary"
+	"TogetherAndStronger/routes/entity/team"
 	"TogetherAndStronger/routes/entity/teambuilding"
 	"TogetherAndStronger/routes/faq"
 	"TogetherAndStronger/routes/list"
@@ -86,6 +88,9 @@ func main() {
 	mux.HandleFunc("/room/deleteRoom", room.DeleteRoom)
 	mux.HandleFunc("/room/getRoom", room.GetRoom)
 	mux.HandleFunc("/room/updateRoom", room.UpdateRoom)
+	mux.HandleFunc("/room/getActivity", room.GetActivity)
+	mux.HandleFunc("/room/addActivity", room.AddActivity)
+	mux.HandleFunc("/room/deleteActivity", room.DeleteActivity)
 
 	mux.HandleFunc("/category/add", category.Add)
 	mux.HandleFunc("/category/delete", category.Delete)
@@ -97,10 +102,23 @@ func main() {
 	mux.HandleFunc("/teambuilding/get", teambuilding.Get)
 	mux.HandleFunc("/teambuilding/update", teambuilding.Update)
 
+	mux.HandleFunc("/team/add", team.Add)
+	mux.HandleFunc("/team/delete", team.Delete)
+	mux.HandleFunc("/team/get", team.Get)
+	mux.HandleFunc("/team/update", team.Update)
+	mux.HandleFunc("/team/getSalary", team.GetSub)
+
 	mux.HandleFunc("/option/add", option.Add)
 	mux.HandleFunc("/option/delete", option.Delete)
 	mux.HandleFunc("/option/get", option.Get)
 	mux.HandleFunc("/option/update", option.Update)
+
+	mux.HandleFunc("/material/add", material.Add)
+	mux.HandleFunc("/material/delete", material.Delete)
+	mux.HandleFunc("/material/get", material.Get)
+	mux.HandleFunc("/material/update", material.Update)
+	mux.HandleFunc("/material/addRental", material.AddRental)
+	mux.HandleFunc("/material/deleteRental", material.DeleteRental)
 
 	handler := cors.Default().Handler(mux)
 
