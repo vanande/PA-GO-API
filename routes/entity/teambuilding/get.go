@@ -1,4 +1,4 @@
-package skel
+package teambuilding
 
 import (
 	"TogetherAndStronger/libraries"
@@ -33,7 +33,6 @@ func Get(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		//						-->	change here <--  									-->	and here <--
 		rows, err := query.SelectQuery("s", []string{"*"}, map[string]interface{}{"id": id})
 		if err != nil {
 			fmt.Errorf("select failed : %v", err)
@@ -42,7 +41,6 @@ func Get(w http.ResponseWriter, req *http.Request) {
 		var s S
 
 		for rows.Next() {
-			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
 			err := rows.Scan(&s.IdClient, &s.Nom, &s.Image)
 			if err != nil {
 				fmt.Println(err)

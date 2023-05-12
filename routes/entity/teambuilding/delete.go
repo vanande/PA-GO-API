@@ -1,4 +1,4 @@
-package skel
+package teambuilding
 
 import (
 	"TogetherAndStronger/libraries"
@@ -21,7 +21,7 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		//						-->	change here <--  			-->	and here <--
-		err := query.DeleteQuery("", "id = ?", id)
+		err := query.DeleteQuery("team_building", "id = ?", id)
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

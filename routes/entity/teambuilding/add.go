@@ -1,4 +1,4 @@
-package skel
+package teambuilding
 
 import (
 	"TogetherAndStronger/libraries"
@@ -14,8 +14,10 @@ func Add(w http.ResponseWriter, req *http.Request) {
 
 		//											-->	change here <--
 		lastInsertID, err := query.InsertQuery("table", map[string]interface{}{
-			// Data like that
-			"nom": data["nom"],
+			"idCLIENT":    data["idc"],
+			"titre":       data["titre"],
+			"type":        data["type"],
+			"description": data["description"],
 		})
 		if err != nil {
 			fmt.Println(err)

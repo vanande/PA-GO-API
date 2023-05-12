@@ -1,4 +1,4 @@
-package skel
+package teambuilding
 
 import (
 	"TogetherAndStronger/libraries"
@@ -21,9 +21,6 @@ func Update(w http.ResponseWriter, req *http.Request) {
 		}
 
 		fieldToUpdate := make(map[string]interface{})
-
-		// as much field as there is updatable cols in the table here
-
 		if name, OK := data["nom"].(string); OK {
 			fieldToUpdate["nom"] = name
 		}
@@ -46,8 +43,6 @@ func Update(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 
-		// delete this part if there is no idADRESSE cols
-		// from here --------------------------------------
 		ida, OK := data["ida"]
 		if OK {
 			addressFieldToUpdate := make(map[string]interface{})
@@ -84,7 +79,6 @@ func Update(w http.ResponseWriter, req *http.Request) {
 				return
 			}
 		}
-		// to here --------------------------------------
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "successfully updated",
