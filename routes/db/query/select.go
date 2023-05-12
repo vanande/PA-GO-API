@@ -19,7 +19,6 @@ func SelectQuery(tableName string, columns []string, conditions map[string]inter
 	// Building base query : SELECT column1, column2, ... FROM table
 	query := fmt.Sprintf("SELECT %s FROM %s", strings.Join(columns, ", "), tableName)
 
-	// Magic begins here
 	var values []interface{}
 	if len(conditions) > 0 {
 		var where []string
