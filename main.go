@@ -66,6 +66,7 @@ func main() {
 	mux.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
 	mux.HandleFunc("/activity/getActivity", activity.GetActivity)
 	mux.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
+	mux.HandleFunc("/activity/makeActivity", activity.MakeActivity)
 	mux.HandleFunc("/activity/getCategory", activity.GetCategory)
 	mux.HandleFunc("/activity/addCategory", activity.AddCategory)
 	mux.HandleFunc("/activity/deleteCategory", activity.DeleteCategory)
