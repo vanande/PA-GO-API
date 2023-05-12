@@ -78,6 +78,9 @@ func main() {
 	mux.HandleFunc("/presta/deletePresta", prestataire.DeletePresta)
 	mux.HandleFunc("/presta/getPresta", prestataire.GetPresta)
 	mux.HandleFunc("/presta/updatePresta", prestataire.UpdatePresta)
+	mux.HandleFunc("/presta/addAnime", prestataire.AddAnime)
+	mux.HandleFunc("/presta/deleteAnime", prestataire.deleteAnime)
+	mux.HandleFunc("/presta/getAnime", prestataire.getAnime)
 
 	mux.HandleFunc("/company/addCompany", company.AddCompany)
 	mux.HandleFunc("/company/deleteCompany", company.DeleteCompany)
