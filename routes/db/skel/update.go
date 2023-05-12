@@ -37,6 +37,7 @@ func Update(w http.ResponseWriter, req *http.Request) {
 				"id": id,
 			}
 
+			//                           --> change here <--
 			err := query.UpdateQuery("s", fieldToUpdate, conditions)
 			if err != nil {
 				fmt.Println(err)

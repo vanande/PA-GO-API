@@ -21,12 +21,21 @@ func Update(w http.ResponseWriter, req *http.Request) {
 		}
 
 		fieldToUpdate := make(map[string]interface{})
-		if name, OK := data["nom"].(string); OK {
-			fieldToUpdate["nom"] = name
+
+		if idc, OK := data["idc"].(string); OK {
+			fieldToUpdate["idClient"] = idc
 		}
 
-		if image, OK := data["image"].(string); OK {
-			fieldToUpdate["image"] = image
+		if t, OK := data["type"].(string); OK {
+			fieldToUpdate["type"] = t
+		}
+
+		if titre, OK := data["titre"].(string); OK {
+			fieldToUpdate["titre"] = titre
+		}
+
+		if description, OK := data["description"].(string); OK {
+			fieldToUpdate["description"] = description
 		}
 
 		if len(fieldToUpdate) > 0 {
@@ -34,49 +43,13 @@ func Update(w http.ResponseWriter, req *http.Request) {
 				"id": id,
 			}
 
-			err := query.UpdateQuery("s", fieldToUpdate, conditions)
+			//						-->	change here <--
+			err := query.UpdateQuery("team_building", fieldToUpdate, conditions)
 			if err != nil {
 				fmt.Println(err)
 				libraries.Response(w, map[string]interface{}{
 					"message": "Failed to update place",
 				}, http.StatusInternalServerError)
-			}
-		}
-
-		ida, OK := data["ida"]
-		if OK {
-			addressFieldToUpdate := make(map[string]interface{})
-			if address, OK := data["adresse"].(string); OK {
-				addressFieldToUpdate["adresse"] = address
-			}
-			if zipCode, OK := data["code_postal"].(string); OK {
-				addressFieldToUpdate["code_postal"] = zipCode
-			}
-			if city, OK := data["ville"].(string); OK {
-				addressFieldToUpdate["ville"] = city
-			}
-			if country, OK := data["pays"].(string); OK {
-				addressFieldToUpdate["pays"] = country
-			}
-
-			if len(addressFieldToUpdate) == 0 && len(fieldToUpdate) == 0 {
-				libraries.Response(w, map[string]interface{}{
-					"message": "No fields to update",
-				}, http.StatusBadRequest)
-				return
-			}
-
-			addressConditions := map[string]interface{}{
-				"idADRESSE": ida,
-			}
-
-			err := query.UpdateQuery("adresse", addressFieldToUpdate, addressConditions)
-			if err != nil {
-				fmt.Println(err)
-				libraries.Response(w, map[string]interface{}{
-					"message": "Failed to update address",
-				}, http.StatusInternalServerError)
-				return
 			}
 		}
 

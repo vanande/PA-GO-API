@@ -8,9 +8,11 @@ import (
 )
 
 type S struct {
-	IdClient string `json:"id"`
-	Nom      string `json:"nom"`
-	Image    string `json:"image"`
+	IdTeamBuilding string `json:"id"`
+	IdClient       string `json:"idc"`
+	Type           string `json:"type"`
+	Titre          string `json:"titre"`
+	Description    string `json:"description"`
 }
 
 func Get(w http.ResponseWriter, req *http.Request) {
@@ -18,17 +20,10 @@ func Get(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
-		if data["id"] == nil || data["id"] == "" {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Bad parameters",
-			}, http.StatusBadRequest)
-			return
-		}
-
 		id, OK := data["id"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
-				"message": "Invalid parameters",
+				"message": "Bad parameters",
 			}, http.StatusBadRequest)
 			return
 		}
@@ -41,7 +36,7 @@ func Get(w http.ResponseWriter, req *http.Request) {
 		var s S
 
 		for rows.Next() {
-			err := rows.Scan(&s.IdClient, &s.Nom, &s.Image)
+			err := rows.Scan(&s.IdTeamBuilding, &s.IdClient, &s.Type, &s.Titre, &s.Description)
 			if err != nil {
 				fmt.Println(err)
 			}
