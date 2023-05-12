@@ -4,6 +4,7 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
+	"TogetherAndStronger/routes/entity/category"
 	"TogetherAndStronger/routes/entity/company"
 	"TogetherAndStronger/routes/entity/place"
 	"TogetherAndStronger/routes/entity/prestataire"
@@ -80,6 +81,11 @@ func main() {
 	mux.HandleFunc("/room/deleteRoom", room.DeleteRoom)
 	mux.HandleFunc("/room/getRoom", room.GetRoom)
 	mux.HandleFunc("/room/updateRoom", room.UpdateRoom)
+
+	mux.HandleFunc("/category/add", category.Add)
+	mux.HandleFunc("/category/delete", category.Delete)
+	mux.HandleFunc("/category/get", category.Get)
+	mux.HandleFunc("/category/update", category.Update)
 
 	handler := cors.Default().Handler(mux)
 
