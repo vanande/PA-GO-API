@@ -68,6 +68,9 @@ func main() {
 	mux.HandleFunc("/activity/getCategory", activity.GetCategory)
 	mux.HandleFunc("/activity/addCategory", activity.AddCategory)
 	mux.HandleFunc("/activity/deleteCategory", activity.DeleteCategory)
+	mux.HandleFunc("/activity/addAnime", activity.AddAnime)
+	mux.HandleFunc("/activity/deleteAnime", activity.DeleteAnime)
+	mux.HandleFunc("/activity/getAnime", activity.GetAnime)
 
 	mux.HandleFunc("/place/addPlace", place.AddPlace)
 	mux.HandleFunc("/place/deletePlace", place.DeletePlace)
@@ -79,8 +82,8 @@ func main() {
 	mux.HandleFunc("/presta/getPresta", prestataire.GetPresta)
 	mux.HandleFunc("/presta/updatePresta", prestataire.UpdatePresta)
 	mux.HandleFunc("/presta/addAnime", prestataire.AddAnime)
-	mux.HandleFunc("/presta/deleteAnime", prestataire.deleteAnime)
-	mux.HandleFunc("/presta/getAnime", prestataire.getAnime)
+	mux.HandleFunc("/presta/deleteAnime", prestataire.DeleteAnime)
+	mux.HandleFunc("/presta/getAnime", prestataire.GetAnime)
 
 	mux.HandleFunc("/company/addCompany", company.AddCompany)
 	mux.HandleFunc("/company/deleteCompany", company.DeleteCompany)
