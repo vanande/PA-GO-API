@@ -4,6 +4,7 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
+	"TogetherAndStronger/routes/entity/room"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/faq"
 	"TogetherAndStronger/routes/list"
@@ -27,7 +28,7 @@ func main() {
 
 	// Start the server
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
-	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/", hello)
 	http.HandleFunc("/faq", faq.Faq)
 	http.HandleFunc("/db/create", db_handler.Create)
 	http.HandleFunc("/db/select", db_handler.Select)
@@ -52,6 +53,11 @@ func main() {
 	http.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
 	http.HandleFunc("/activity/getActivity", activity.GetActivity)
 	http.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
+	http.HandleFunc("/room/addRoom", room.AddRoom)
+	http.HandleFunc("/room/deleteRoom", room.DeleteRoom)
+	http.HandleFunc("/room/getRoom", room.GetRoom)
+	http.HandleFunc("/room/updateRoom", room.UpdateRoom)
+
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
 	if err != nil {
 		panic(err)

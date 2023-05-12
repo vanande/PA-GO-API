@@ -18,7 +18,7 @@ func AddRoom(w http.ResponseWriter, req *http.Request) {
 			"prix":          data["prix"],
 			"description":   data["description"],
 			"disponibilite": 1,
-			"idADRESSE":     data["idl"],
+			"idLIEU":        data["idl"],
 			"image":         data["image"],
 		})
 		if err != nil {
