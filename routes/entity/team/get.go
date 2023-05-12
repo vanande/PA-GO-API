@@ -1,4 +1,4 @@
-package skel
+package team
 
 import (
 	"TogetherAndStronger/libraries"
@@ -21,21 +21,21 @@ func Get(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
-		ide, OK := data["id"].(string)
+		ide, OK := data["ide"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid parameters",
 			}, http.StatusBadRequest)
 			return
 		}
-		idp, OK := data["id"].(string)
+		idc, OK := data["idc"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid parameters",
 			}, http.StatusBadRequest)
 			return
 		}
-		idt, OK := data["id"].(string)
+		idt, OK := data["idt"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid parameters",
@@ -46,7 +46,7 @@ func Get(w http.ResponseWriter, req *http.Request) {
 		//						-->	change here <--  									-->	and here <--
 		rows, err := query.SelectQuery("equipe", []string{"*"}, map[string]interface{}{
 			"idEQUIPE":        ide,
-			"idPARTICIPANT":   idp,
+			"idCLIENT":        idc,
 			"idTEAM_BUILDING": idt,
 		})
 		if err != nil {

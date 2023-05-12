@@ -1,4 +1,4 @@
-package skel
+package team
 
 import (
 	"TogetherAndStronger/libraries"

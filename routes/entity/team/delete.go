@@ -1,4 +1,4 @@
-package skel
+package team
 
 import (
 	"TogetherAndStronger/libraries"
@@ -44,7 +44,7 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 		}
 
 		//						-->	change here <--  			-->	and here <--
-		err := query.DeleteQuery("equipe", "idEQUIPE = ? AND idCLIENT = ? AND idTEAM_BUILDING = ? AND idPARTICIPANT", id, idc, idt, idp)
+		err := query.DeleteQuery("equipe", "idEQUIPE = ? AND idCLIENT = ? AND idTEAM_BUILDING = ? AND idPARTICIPANT = ?", id, idc, idt, idp)
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{
