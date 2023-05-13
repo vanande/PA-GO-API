@@ -82,6 +82,7 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 			}
 
 			if lastA.IdActivite != a.IdActivite {
+				a.Image = fmt.Sprintf("https://togetherandstronger.fr:9000/public/activity/%s", a.Image)
 				a.CategoryActivite = append(a.CategoryActivite, c)
 				a.Options = append(a.Options, o)
 				res = append(res, a)
