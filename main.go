@@ -31,14 +31,13 @@ func hello(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-
 	mux := http.NewServeMux()
 
 	fmt.Println("Server starting...")
 
 	// Start the server
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
-	mux.HandleFunc("/hello", hello)
+	mux.HandleFunc("/", hello)
 	mux.HandleFunc("/faq", faq.Faq)
 	mux.HandleFunc("/db/create", db_handler.Create)
 	mux.HandleFunc("/db/select", db_handler.Select)

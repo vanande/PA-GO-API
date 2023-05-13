@@ -16,8 +16,13 @@ func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
 	}
 	defer logFile.Close()
 
+	msg, OK := message["message"].(string)
+	if !OK {
+		msg = "No message provided"
+	}
+
 	log.SetOutput(io.MultiWriter(os.Stderr, logFile))
-	log.Printf("Response - Code: %d - Body: %v\n", code, message)
+	log.Printf("Response - Code: %d - Message: %s\n", code, msg)
 
 	response := map[string]interface{}{}
 	for key, value := range message {
