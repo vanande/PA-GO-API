@@ -28,7 +28,11 @@ func Get(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+<<<<<<< HEAD
 		rows, err := query.SelectQuery("team_building", []string{"*"}, map[string]interface{}{"idTEAM_BUILDING": id})
+=======
+		rows, err := query.SelectQuery("s", []string{"*"}, map[string]interface{}{"id": id})
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Errorf("select failed : %v", err)
 		}

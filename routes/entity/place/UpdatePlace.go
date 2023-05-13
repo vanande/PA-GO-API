@@ -65,7 +65,11 @@ func UpdatePlace(w http.ResponseWriter, req *http.Request) {
 		}
 
 		addressConditions := map[string]interface{}{
+<<<<<<< HEAD
 			"idADRESSE": data["idADRESSE"],
+=======
+			"idADRESSE": data["ida"],
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		}
 
 		err := query.UpdateQuery("adresse", addressFieldToUpdate, addressConditions)

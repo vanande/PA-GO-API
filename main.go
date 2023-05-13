@@ -4,12 +4,15 @@ import (
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
+<<<<<<< HEAD
 	"TogetherAndStronger/routes/entity/category"
 	"TogetherAndStronger/routes/entity/company"
 	"TogetherAndStronger/routes/entity/material"
 	"TogetherAndStronger/routes/entity/option"
 	"TogetherAndStronger/routes/entity/place"
 	"TogetherAndStronger/routes/entity/prestataire"
+=======
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	"TogetherAndStronger/routes/entity/room"
 	"TogetherAndStronger/routes/entity/salary"
 	"TogetherAndStronger/routes/entity/team"
@@ -37,6 +40,7 @@ func main() {
 	fmt.Println("Server starting...")
 
 	// Start the server
+<<<<<<< HEAD
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
 	mux.HandleFunc("/hello", hello)
 	mux.HandleFunc("/faq", faq.Faq)
@@ -142,6 +146,40 @@ func main() {
 	handler := cors.Default().Handler(mux)
 
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
+=======
+	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./img"))))
+	http.HandleFunc("/", hello)
+	http.HandleFunc("/faq", faq.Faq)
+	http.HandleFunc("/db/create", db_handler.Create)
+	http.HandleFunc("/db/select", db_handler.Select)
+	http.HandleFunc("/db/update", db_handler.Update)
+	http.HandleFunc("/db/delete", db_handler.Delete)
+	http.HandleFunc("/auth/LoginCompany", auth.LoginCompany)
+	http.HandleFunc("/auth/LoginPresta", auth.LoginPresta)
+	http.HandleFunc("/auth/LoginSalary", auth.LoginSalary)
+	http.HandleFunc("/signup/SignupSalary", signup.SignupSalary)
+	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
+	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
+	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
+	http.HandleFunc("/lookfor/LookForCompany", lookfor.LookForCompany)
+	//	http.HandleFunc("/lookfor/LookForPresta", lookfor.LookForPresta)
+	http.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
+	http.HandleFunc("/salary/addInfo", salary.AddSalaryInfo)
+	http.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
+	http.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
+	http.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
+	http.HandleFunc("/list/infos", list.ListInfos)
+	http.HandleFunc("/activity/addActivity", activity.AddActivity)
+	http.HandleFunc("/activity/deleteActivity", activity.DeleteActivity)
+	http.HandleFunc("/activity/getActivity", activity.GetActivity)
+	http.HandleFunc("/activity/updateActivity", activity.UpdateActivity)
+	http.HandleFunc("/room/addRoom", room.AddRoom)
+	http.HandleFunc("/room/deleteRoom", room.DeleteRoom)
+	http.HandleFunc("/room/getRoom", room.GetRoom)
+	http.HandleFunc("/room/updateRoom", room.UpdateRoom)
+
+	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	if err != nil {
 		panic(err)
 	}

@@ -30,7 +30,11 @@ func DeleteAnime(w http.ResponseWriter, req *http.Request) {
 		}
 
 		//						-->	change here <--  			-->	and here <--
+<<<<<<< HEAD
 		err := query.DeleteQuery("anime", "idlist_activite = ? AND idPRESTATAIRE = ?", ida, idp)
+=======
+		err := query.DeleteQuery("", "idlist_activite = ? AND idPRESTATAIRE = ?", ida, idp)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

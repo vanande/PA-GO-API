@@ -29,7 +29,11 @@ func DeleteCategory(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		//						-->	change here <--  			-->	and here <--
+<<<<<<< HEAD
 		err := query.DeleteQuery("category_activite", "idCategory = ? AND idlist_activite = ?", idc, ida)
+=======
+		err := query.DeleteQuery("category_activity", "idCategory = ? AND idlist_activite = ?", idc, ida)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

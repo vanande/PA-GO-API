@@ -33,7 +33,11 @@ func GetCategory(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+<<<<<<< HEAD
 		tables := []string{"category_activite ca", "category c"}
+=======
+		tables := []string{"category_activite", "category"}
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		columns := []string{"ca.idCategory", "c.nom", "c.description"}
 		joins := []map[string]string{
 			{"c.idCategory": "ca.idCategory"},

@@ -7,7 +7,11 @@ import (
 	"net/http"
 )
 
+<<<<<<< HEAD
 func Update(w http.ResponseWriter, req *http.Request) {
+=======
+func UpdateCategory(w http.ResponseWriter, req *http.Request) {
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)

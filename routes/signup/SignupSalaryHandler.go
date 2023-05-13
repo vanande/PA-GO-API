@@ -62,7 +62,11 @@ func SignupSalary(w http.ResponseWriter, req *http.Request) {
 		err = query.UpdateQuery("participant", map[string]interface{}{
 			"token": token,
 		}, map[string]interface{}{
+<<<<<<< HEAD
 			"idParticipant": lastInsertId,
+=======
+			"idPARTICIPANT": lastInsertId,
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		})
 		if err != nil {
 			libraries.Response(w, map[string]interface{}{

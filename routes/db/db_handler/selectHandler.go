@@ -58,7 +58,7 @@ func Select(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Build the response object
+	// INIT RESPONSE VAR DYNAMIC
 	var response []map[string]interface{}
 	for rows.Next() {
 		rowData := make(map[string]interface{})
@@ -78,7 +78,6 @@ func Select(w http.ResponseWriter, req *http.Request) {
 				rowData[columnStrings[i]] = v
 			}
 		}
-		// @TODO: Decode the JSON response
 		response = append(response, rowData)
 	}
 

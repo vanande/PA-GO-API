@@ -13,7 +13,11 @@ func DeleteEngage(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
+<<<<<<< HEAD
 		id, OK := data["idt"].(string)
+=======
+		id, OK := data["id"].(string)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
@@ -29,7 +33,11 @@ func DeleteEngage(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		//						-->	change here <--  			-->	and here <--
+<<<<<<< HEAD
 		err := query.DeleteQuery("engage", "idTEAM_BUILDING = ? AND idPRESTATAIRE = ?", id, idp)
+=======
+		err := query.DeleteQuery("engage", "idTEAM_BUILDING = ? AND idPRESTATAIRE", id, idp)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

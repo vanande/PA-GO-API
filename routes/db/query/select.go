@@ -7,10 +7,16 @@ import (
 	"strings"
 )
 
+type name struct {
+	nom string
+	age int
+}
+
 // SelectQuery returns a sql.Rows object. It takes a table name, a slice of columns and a map of conditions.
 //
 // Example : SelectQuery("users", []string{"id", "name"}, map[string]interface{}{"id": 1})
 func SelectQuery(tableName string, columns []string, conditions map[string]interface{}) (*sql.Rows, error) {
+	// Building base query : SELECT column1, column2, ... FROM table
 	query := fmt.Sprintf("SELECT %s FROM %s", strings.Join(columns, ", "), tableName)
 
 	var values []interface{}

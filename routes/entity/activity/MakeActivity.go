@@ -20,7 +20,11 @@ func MakeActivity(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+<<<<<<< HEAD
 		price, OK := data["price"].(float64)
+=======
+		price, OK := data["prix"].(float64)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",

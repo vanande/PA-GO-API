@@ -1,28 +1,23 @@
-package category
+package panier
 
 import (
 	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/db/query"
 	"fmt"
 	"net/http"
+	"time"
 )
 
-<<<<<<< HEAD
 func Add(w http.ResponseWriter, req *http.Request) {
-=======
-func AddCategory(w http.ResponseWriter, req *http.Request) {
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
 
-<<<<<<< HEAD
-		lastInsertID, err := query.InsertQuery("category", map[string]interface{}{
-=======
-		lastInsertID, err := query.InsertQuery("client", map[string]interface{}{
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
-			"nom":         data["nom"],
-			"description": data["description"],
+		//											-->	change here <--
+		lastInsertID, err := query.InsertQuery("panier", map[string]interface{}{
+			"idCLIENT": data["idCLIENT"],
+			"statut":   data["statut"],
+			"date":     time.Now().Format("2006-01-02 15:04:05"),
 		})
 		if err != nil {
 			fmt.Println(err)

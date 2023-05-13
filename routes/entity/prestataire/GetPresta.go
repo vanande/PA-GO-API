@@ -2,29 +2,47 @@ package prestataire
 
 import (
 	"TogetherAndStronger/libraries"
+<<<<<<< HEAD
 	db2 "TogetherAndStronger/routes/db/init"
 	"fmt"
 	"html"
 	"log"
+=======
+	"TogetherAndStronger/routes/db/query"
+	"fmt"
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	"net/http"
 )
 
 type Presta struct {
+<<<<<<< HEAD
+=======
+	IdPrestataire  int    `json:"idPRESTATAIRE"`
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	Nom            string `json:"nom"`
 	Prenom         string `json:"prenom"`
 	Tel            string `json:"tel"`
 	Email          string `json:"email"`
+<<<<<<< HEAD
+=======
+	Password       string `json:"password"`
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	Metier         string `json:"metier"`
 	Description    string `json:"description"`
 	Nom_entreprise string `json:"nom_entreprise"`
 	Rib            string `json:"rib"`
 	Valide         string `json:"valide"`
+<<<<<<< HEAD
 	Adresse        string `json:"adresse"`
 	Complement     string `json:"complement"`
 	Ville          string `json:"ville"`
 	Code_postal    string `json:"code_postal"`
 	Pays           string `json:"pays"`
 	IdAdresse      int    `json:"idADRESSE"`
+=======
+	IdAdresse      int    `json:"idADRESSE"`
+	Image          string `json:"image"`
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 }
 
 func GetPresta(w http.ResponseWriter, req *http.Request) {
@@ -32,6 +50,7 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
+<<<<<<< HEAD
 		if data["id"] == nil {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Empty parameters",
@@ -41,6 +60,11 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 		if data["id"] == "" {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid parameters",
+=======
+		if data["id"] == nil || data["id"] == "" {
+			libraries.Response(w, map[string]interface{}{
+				"message": "Bad parameters",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
@@ -53,6 +77,7 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+<<<<<<< HEAD
 		db, err := db2.InitDB()
 		if err != nil {
 			libraries.Response(w, map[string]interface{}{
@@ -108,6 +133,28 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 				"message": "Prestataire not found",
 			}, http.StatusNotFound)
 		}
+=======
+		rows, err := query.SelectQuery("prestataire", []string{"*"}, map[string]interface{}{"idPRESTATAIRE": idPrestataire})
+		if err != nil {
+			fmt.Errorf("select failed : %v", err)
+		}
+
+		var presta Presta
+
+		for rows.Next() {
+			err := rows.Scan(&presta.IdPrestataire, &presta.Nom, &presta.Prenom, &presta.Tel, &presta.Email, &presta.Password, &presta.Metier, &presta.Description, &presta.Nom_entreprise, &presta.Rib, &presta.Valide, &presta.IdAdresse, &presta.Image)
+			if err != nil {
+				fmt.Println(err)
+			}
+			presta.Image = fmt.Sprintf("https://%s/public/activity/%s", req.Host, presta.Image)
+		}
+
+		libraries.Response(w, map[string]interface{}{
+			"message": "Successfully fetched data",
+			"data":    presta,
+		}, http.StatusOK)
+
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	default:
 		libraries.Response(w, map[string]interface{}{
 			"message": "Method not allowed",

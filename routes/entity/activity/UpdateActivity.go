@@ -21,7 +21,11 @@ func UpdateActivity(w http.ResponseWriter, req *http.Request) {
 		id, OK := data["id"]
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 				"message": "Invalid place ID",
+=======
+				"message": "Invalid activity ID",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
@@ -33,6 +37,7 @@ func UpdateActivity(w http.ResponseWriter, req *http.Request) {
 		if description, err := data["description"].(string); err {
 			fieldToUpdate["description"] = description
 		}
+<<<<<<< HEAD
 		if minParticipants, err := data["min_participants"].(string); err {
 			fieldToUpdate["nb_personne_min"] = minParticipants
 		}
@@ -43,6 +48,18 @@ func UpdateActivity(w http.ResponseWriter, req *http.Request) {
 			fieldToUpdate["min_price"] = minPrice
 		}
 		if maxPrice, err := data["max_price"].(string); err {
+=======
+		if minParticipants, err := data["min_participants"].(float64); err {
+			fieldToUpdate["min_participants"] = minParticipants
+		}
+		if maxParticipants, err := data["max_participants"].(float64); err {
+			fieldToUpdate["max_participants"] = maxParticipants
+		}
+		if minPrice, err := data["min_price"].(float64); err {
+			fieldToUpdate["min_price"] = minPrice
+		}
+		if maxPrice, err := data["max_price"].(float64); err {
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			fieldToUpdate["max_price"] = maxPrice
 		}
 		if image, err := data["image"].(string); err {

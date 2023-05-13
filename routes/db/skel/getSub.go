@@ -1,4 +1,4 @@
-package category
+package skel
 
 import (
 	"TogetherAndStronger/libraries"
@@ -7,27 +7,16 @@ import (
 	"net/http"
 )
 
-type S struct {
+type Res struct {
 	IdCategory  string `json:"id"`
 	Nom         string `json:"nom"`
 	Description string `json:"description"`
 }
 
-<<<<<<< HEAD
-func Get(w http.ResponseWriter, req *http.Request) {
-=======
-func GetCategory(w http.ResponseWriter, req *http.Request) {
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
+func GetSub(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
-
-		if data["id"] == nil || data["id"] == "" {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Bad parameters",
-			}, http.StatusBadRequest)
-			return
-		}
 
 		id, OK := data["id"].(string)
 		if !OK {
@@ -37,23 +26,43 @@ func GetCategory(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		rows, err := query.SelectQuery("category", []string{"*"}, map[string]interface{}{"idCategory": id})
-		if err != nil {
-			fmt.Errorf("select failed : %v", err)
+		// tables in the right order
+		tables := []string{"category_activite", "category"}
+		// columns to look for
+		columns := []string{"ca.idCategory", "c.nom", "c.description"}
+		// on what to join
+		joins := []map[string]string{
+			{"c.idCategory": "ca.idCategory"},
+		}
+		// the where at the end
+		conditions := map[string]interface{}{
+			"idlist_activite": id,
 		}
 
-		var s S
+		rows, err := query.SelectWithInnerJoin(tables, columns, joins, conditions)
+		if err != nil {
+			fmt.Println(err)
+			libraries.Response(w, map[string]interface{}{
+				"message": "No data found",
+			}, http.StatusNotFound)
+			return
+		}
+
+		var res []Res
 
 		for rows.Next() {
+			var s Res
+			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
 			err := rows.Scan(&s.IdCategory, &s.Nom, &s.Description)
 			if err != nil {
 				fmt.Println(err)
 			}
+			res = append(res, s)
 		}
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "Successfully fetched data",
-			"data":    s,
+			"data":    res,
 		}, http.StatusOK)
 
 	default:

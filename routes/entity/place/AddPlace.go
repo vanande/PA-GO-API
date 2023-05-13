@@ -33,7 +33,10 @@ func AddPlace(w http.ResponseWriter, req *http.Request) {
 			"nom":       data["nom"],
 			"idADRESSE": lastAddressID,
 		})
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Println(err)
 			libraries.Response(w, map[string]interface{}{

@@ -14,7 +14,10 @@ type Room struct {
 	Prix          int    `json:"prix"`
 	Description   string `json:"description"`
 	Disponibilite int    `json:"disponibilite"`
+<<<<<<< HEAD
 	idLIEU        string `json:"idl"`
+=======
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	Image         string `json:"image"`
 }
 
@@ -30,7 +33,11 @@ func GetRoom(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+<<<<<<< HEAD
 		rows, err := query.SelectQuery("salle", []string{"*"}, map[string]interface{}{"idSALLE": data["id"]})
+=======
+		rows, err := query.SelectQuery("lieu", []string{"*"}, map[string]interface{}{"idLIEU": data["id"]})
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Errorf("select failed : %v", err)
 		}
@@ -38,7 +45,11 @@ func GetRoom(w http.ResponseWriter, req *http.Request) {
 		var room Room
 
 		for rows.Next() {
+<<<<<<< HEAD
 			err := rows.Scan(&room.IdSalle, &room.Nom, &room.NumSalle, &room.Prix, &room.Description, &room.Disponibilite, &room.idLIEU, &room.Image)
+=======
+			err := rows.Scan(&room.IdSalle, &room.Nom, &room.NumSalle, &room.Prix, &room.Description, &room.Disponibilite, &room.Image)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			if err != nil {
 				fmt.Println(err)
 			}

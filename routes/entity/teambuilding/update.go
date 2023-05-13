@@ -40,17 +40,29 @@ func Update(w http.ResponseWriter, req *http.Request) {
 
 		if len(fieldToUpdate) > 0 {
 			conditions := map[string]interface{}{
+<<<<<<< HEAD
 				"idTEAM_BUILDING": id,
 			}
 
 			//			-->	change here <--
+=======
+				"id": id,
+			}
+
+			//						-->	change here <--
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			err := query.UpdateQuery("team_building", fieldToUpdate, conditions)
 			if err != nil {
 				fmt.Println(err)
 				libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 					"message": "Failed to update",
 				}, http.StatusInternalServerError)
 				return
+=======
+					"message": "Failed to update place",
+				}, http.StatusInternalServerError)
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}
 		}
 

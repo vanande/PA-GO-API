@@ -6,6 +6,24 @@ import (
 	"strings"
 )
 
+// UpdateQuery updates rows in an existing table based on specified conditions.
+//
+// Example usage:
+//
+//	updates := map[string]interface{}{
+//			"token": 2222,
+//	}
+//
+//	conditions := map[string]interface{}{
+//			"id": 1,
+//	}
+//
+// err := UpdateQuery("participant", updates, conditions)
+//
+//	if err != nil {
+//			fmt.Println(err)
+//			return
+//	}
 func UpdateQuery(tableName string, updates map[string]interface{}, conditions map[string]interface{}) error {
 	if len(updates) == 0 {
 		return fmt.Errorf("no updates provided")

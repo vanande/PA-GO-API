@@ -1,4 +1,4 @@
-package category
+package skel
 
 import (
 	"TogetherAndStronger/libraries"
@@ -8,16 +8,12 @@ import (
 )
 
 type S struct {
-	IdCategory  string `json:"id"`
-	Nom         string `json:"nom"`
-	Description string `json:"description"`
+	IdClient string `json:"id"`
+	Nom      string `json:"nom"`
+	Image    string `json:"image"`
 }
 
-<<<<<<< HEAD
 func Get(w http.ResponseWriter, req *http.Request) {
-=======
-func GetCategory(w http.ResponseWriter, req *http.Request) {
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
@@ -37,7 +33,8 @@ func GetCategory(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		rows, err := query.SelectQuery("category", []string{"*"}, map[string]interface{}{"idCategory": id})
+		//						-->	change here <--  									-->	and here <--
+		rows, err := query.SelectQuery("s", []string{"*"}, map[string]interface{}{"id": id})
 		if err != nil {
 			fmt.Errorf("select failed : %v", err)
 		}
@@ -45,7 +42,8 @@ func GetCategory(w http.ResponseWriter, req *http.Request) {
 		var s S
 
 		for rows.Next() {
-			err := rows.Scan(&s.IdCategory, &s.Nom, &s.Description)
+			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
+			err := rows.Scan(&s.IdClient, &s.Nom, &s.Image)
 			if err != nil {
 				fmt.Println(err)
 			}

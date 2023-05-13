@@ -13,8 +13,12 @@ func AddActivity(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
+<<<<<<< HEAD
 		dateDebutStr := data["date_debut"].(string)
 		dateDebut, err := time.Parse("2006-01-02", dateDebutStr)
+=======
+		dateDebut, err := time.Parse("2006-01-02", data["date_debut"].(string))
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Errorf("invalid date: %v", err)
 			libraries.Response(w, map[string]interface{}{
@@ -23,8 +27,12 @@ func AddActivity(w http.ResponseWriter, req *http.Request) {
 			)
 		}
 
+<<<<<<< HEAD
 		dateFinStr := data["date_fin"].(string)
 		dateFin, err := time.Parse("2006-01-02", dateFinStr)
+=======
+		dateFin, err := time.Parse("2006-01-02", data["date_fin"].(string))
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Errorf("invalid date: %v", err)
 			libraries.Response(w, map[string]interface{}{

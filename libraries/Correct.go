@@ -41,7 +41,7 @@ func isValidId(id string) bool {
 	return err == nil
 }
 
-// isValidField returns true if the field is valid, false otherwise.
+// Correct isValidField returns true if the field is valid, false otherwise.
 // Example: isValidField("John", "nom") returns true and isValidField("John", "age") returns false.
 func Correct(fieldValue string, fieldType string) bool {
 	fieldValue = strings.TrimSpace(fieldValue)

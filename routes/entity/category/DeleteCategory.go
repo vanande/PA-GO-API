@@ -13,6 +13,7 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
+<<<<<<< HEAD
 		id, OK := data["id"].(string)
 
 		if !OK {
@@ -23,6 +24,9 @@ func Delete(w http.ResponseWriter, req *http.Request) {
 		}
 
 		err := query.DeleteQuery("category", "idCategory = ?", id)
+=======
+		err := query.DeleteQuery("category", "idCategory = ?", data["id"])
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

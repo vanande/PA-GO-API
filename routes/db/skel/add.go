@@ -1,4 +1,4 @@
-package category
+package skel
 
 import (
 	"TogetherAndStronger/libraries"
@@ -7,22 +7,15 @@ import (
 	"net/http"
 )
 
-<<<<<<< HEAD
 func Add(w http.ResponseWriter, req *http.Request) {
-=======
-func AddCategory(w http.ResponseWriter, req *http.Request) {
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
 
-<<<<<<< HEAD
-		lastInsertID, err := query.InsertQuery("category", map[string]interface{}{
-=======
-		lastInsertID, err := query.InsertQuery("client", map[string]interface{}{
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
-			"nom":         data["nom"],
-			"description": data["description"],
+		//											-->	change here <--
+		lastInsertID, err := query.InsertQuery("table", map[string]interface{}{
+			// Data like that
+			"nom": data["nom"],
 		})
 		if err != nil {
 			fmt.Println(err)

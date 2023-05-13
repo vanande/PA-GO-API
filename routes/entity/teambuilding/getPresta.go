@@ -60,7 +60,10 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 
 		var res []Presta
 		var prix float64
+<<<<<<< HEAD
 		prix = 0
+=======
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 
 		for rows.Next() {
 			var p Presta

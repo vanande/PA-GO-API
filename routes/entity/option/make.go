@@ -15,7 +15,11 @@ func Make(w http.ResponseWriter, req *http.Request) {
 		idlo, OK := data["idlo"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 				"message": "Invalid ID1",
+=======
+				"message": "Invalid ID",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
@@ -23,7 +27,11 @@ func Make(w http.ResponseWriter, req *http.Request) {
 		idla, OK := data["idla"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 				"message": "Invalid ID2",
+=======
+				"message": "Invalid ID",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
@@ -31,14 +39,22 @@ func Make(w http.ResponseWriter, req *http.Request) {
 		ida, OK := data["ida"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 				"message": "Invalid ID3",
+=======
+				"message": "Invalid ID",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
 
 		//											-->	change here <--
+<<<<<<< HEAD
 		_, err := query.InsertQuery("tas.option", map[string]interface{}{
 			// Data like that
+=======
+		lastInsertID, err := query.InsertQuery("tas.option", map[string]interface{}{
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			"idlist_option":   idlo,
 			"idlist_activite": idla,
 			"idActivite":      ida,
@@ -52,7 +68,12 @@ func Make(w http.ResponseWriter, req *http.Request) {
 		}
 
 		libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 			"message": "Successfully added",
+=======
+			"message":        "Successfully added",
+			"lastIDInserted": lastInsertID,
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		}, http.StatusOK)
 	}
 }

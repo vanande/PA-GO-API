@@ -50,7 +50,11 @@ func GetPlace(w http.ResponseWriter, req *http.Request) {
 			FROM 
 				lieu l 
 				INNER JOIN adresse a ON a.idADRESSE = l.idADRESSE
+<<<<<<< HEAD
 			WHERE l.idLIEU = %s`,
+=======
+			WHERE l.id = %s`,
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			idLIEU)
 		fmt.Println(html.EscapeString(query))
 

@@ -12,7 +12,10 @@ type S struct {
 	IdPrestataire  string `json:"idPRESTATAIRE"`
 }
 
+<<<<<<< HEAD
 // GetAnime return the activities animated by the presta
+=======
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 func GetAnime(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case "POST":

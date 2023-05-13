@@ -15,7 +15,11 @@ func UpdateCompany(w http.ResponseWriter, req *http.Request) {
 		id, OK := data["id"]
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
+<<<<<<< HEAD
 				"message": "Invalid place ID",
+=======
+				"message": "Invalid company ID",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}, http.StatusBadRequest)
 			return
 		}
@@ -71,6 +75,7 @@ func UpdateCompany(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 
+<<<<<<< HEAD
 		ida, OK := data["ida"]
 		if OK {
 			addressFieldToUpdate := make(map[string]interface{})
@@ -110,6 +115,44 @@ func UpdateCompany(w http.ResponseWriter, req *http.Request) {
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "successfully updated",
+=======
+		addressFieldToUpdate := make(map[string]interface{})
+		if address, OK := data["adresse"].(string); OK {
+			addressFieldToUpdate["adresse"] = address
+		}
+		if zipCode, OK := data["code_postal"].(string); OK {
+			addressFieldToUpdate["code_postal"] = zipCode
+		}
+		if city, OK := data["ville"].(string); OK {
+			addressFieldToUpdate["ville"] = city
+		}
+		if country, OK := data["pays"].(string); OK {
+			addressFieldToUpdate["pays"] = country
+		}
+
+		if len(addressFieldToUpdate) == 0 && len(fieldToUpdate) == 0 {
+			libraries.Response(w, map[string]interface{}{
+				"message": "No fields to update",
+			}, http.StatusBadRequest)
+			return
+		}
+
+		addressConditions := map[string]interface{}{
+			"idADRESSE": data["ida"],
+		}
+
+		err := query.UpdateQuery("adresse", addressFieldToUpdate, addressConditions)
+		if err != nil {
+			fmt.Println(err)
+			libraries.Response(w, map[string]interface{}{
+				"message": "Failed to update address",
+			}, http.StatusInternalServerError)
+			return
+		}
+
+		libraries.Response(w, map[string]interface{}{
+			"message": "Place and address successfully updated",
+>>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		}, http.StatusOK)
 
 	default:
