@@ -10,7 +10,7 @@ import (
 func DeleteAnime(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
-	case "POST":
+	case "DELETE":
 		data := libraries.Body(w, req)
 
 		ida, OK := data["ida"].(string)

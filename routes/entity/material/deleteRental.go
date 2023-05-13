@@ -10,7 +10,7 @@ import (
 func DeleteRental(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
-	case "POST":
+	case "DELETE":
 		data := libraries.Body(w, req)
 
 		id, OK := data["id"].(string)

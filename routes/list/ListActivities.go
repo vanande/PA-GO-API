@@ -34,7 +34,7 @@ type Activite struct {
 	PrixMax          float64    `json:"prix_max"`
 	Image            string     `json:"image"`
 	Note             float64    `json:"note"`
-	CategoryActivite []Category `json:"category_activite"`
+	CategoryActivite []Category `json:"category"`
 	Options          []Option   `json:"options"`
 }
 

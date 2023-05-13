@@ -58,7 +58,9 @@ func main() {
 	mux.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
 	mux.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	mux.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
+
 	mux.HandleFunc("/list/infos", list.ListInfos)
+	mux.HandleFunc("/list/category", list.ListCategory)
 	mux.HandleFunc("/list/activity", list.ListActivities)
 
 	mux.HandleFunc("/activity/addActivity", activity.AddActivity)

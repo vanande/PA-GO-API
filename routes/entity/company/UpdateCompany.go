@@ -9,7 +9,7 @@ import (
 
 func UpdateCompany(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
-	case "POST":
+	case "PATCH":
 		data := libraries.Body(w, req)
 
 		id, OK := data["id"]

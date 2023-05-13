@@ -10,7 +10,7 @@ import (
 func DeleteSalaryInfo(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
-	case "POST":
+	case "DELETE":
 		data := libraries.Body(w, req)
 
 		err := query.DeleteQuery("participant_info", "idParticipant = ? AND idClient = ? AND idInfo = ?", data["idp"], data["idc"], data["idi"])

@@ -10,7 +10,7 @@ import (
 func DeleteActivity(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
-	case "POST":
+	case "DELETE":
 		data := libraries.Body(w, req)
 
 		err := query.DeleteQuery("list_activite", "idlist_activite = ?", data["id"])

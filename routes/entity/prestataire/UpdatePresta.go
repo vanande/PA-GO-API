@@ -10,7 +10,7 @@ import (
 // UpdatePresta UpdatePlace updates an existing place in the lieu table in the database, along with its associated address in the adresse table.
 func UpdatePresta(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
-	case "POST":
+	case "PATCH":
 		data := libraries.Body(w, req)
 
 		id, OK := data["id"]
@@ -120,7 +120,7 @@ func UpdatePresta(w http.ResponseWriter, req *http.Request) {
 		}
 
 		libraries.Response(w, map[string]interface{}{
-			"message": "Place and address successfully updated",
+			"message": "Data successfully updated",
 		}, http.StatusOK)
 
 	default:

@@ -15,7 +15,7 @@ import (
 // Returns nothing, but sends an HTTP response indicating whether the activity was successfully updated.
 func UpdateActivity(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
-	case "POST":
+	case "PATCH":
 		data := libraries.Body(w, req)
 
 		id, OK := data["id"]

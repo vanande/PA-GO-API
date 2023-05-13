@@ -1,4 +1,4 @@
-package category
+package list
 
 import (
 	"TogetherAndStronger/libraries"
@@ -13,36 +13,29 @@ type S struct {
 	Description string `json:"description"`
 }
 
-func Get(w http.ResponseWriter, req *http.Request) {
+func ListCategory(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
-	case "POST":
-		data := libraries.Body(w, req)
+	case "GET":
 
-		id, OK := data["id"].(string)
-		if !OK {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Invalid parameters",
-			}, http.StatusBadRequest)
-			return
-		}
-
-		rows, err := query.SelectQuery("category", []string{"*"}, map[string]interface{}{"idCategory": id})
+		rows, err := query.SelectQuery("category", []string{"*"}, map[string]interface{}{"1": 1})
 		if err != nil {
 			fmt.Errorf("select failed : %v", err)
 		}
 
-		var s S
+		var res []S
 
 		for rows.Next() {
+			var s S
 			err := rows.Scan(&s.IdCategory, &s.Nom, &s.Description)
 			if err != nil {
 				fmt.Println(err)
 			}
+			res = append(res, s)
 		}
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "Successfully fetched data",
-			"data":    s,
+			"data":    res,
 		}, http.StatusOK)
 
 	default:

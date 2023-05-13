@@ -10,7 +10,7 @@ import (
 func DeletePlace(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
-	case "POST":
+	case "DELETE":
 		data := libraries.Body(w, req)
 
 		err := query.DeleteQuery("lieu", "idLIEU = ?", data["id"])
