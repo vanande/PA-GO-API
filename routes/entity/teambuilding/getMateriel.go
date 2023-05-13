@@ -5,25 +5,21 @@ import (
 	"TogetherAndStronger/routes/db/query"
 	"fmt"
 	"net/http"
+	"time"
 )
 
-type Presta struct {
-	IdPrestataire string  `json:"id"`
-	Nom           string  `json:"nom"`
-	Prenom        string  `json:"prenom"`
-	Tel           string  `json:"tel"`
-	Email         string  `json:"email"`
-	Metier        string  `json:"metier"`
-	Description   string  `json:"description"`
-	NomEntreprise string  `json:"nomEntreprise"`
-	Rib           string  `json:"rib"`
-	Valide        string  `json:"valide"`
-	IdAdresse     string  `json:"idAdresse"`
-	Image         string  `json:"image"`
-	Prix          float64 `json:"prix"`
+type Materiel struct {
+	IdMateriel         string     `json:"id"`
+	Nom                string     `json:"nom"`
+	Description        string     `json:"description"`
+	Prix               float64    `json:"prix"`
+	QuantiteDisponible int        `json:"quantite_disponible"`
+	PrixAPayer         float64    `json:"prix_a_payer"`
+	DateLocation       *time.Time `json:"date_location"`
+	DateRendu          *time.Time `json:"date_rendu"`
 }
 
-func GetPresta(w http.ResponseWriter, req *http.Request) {
+func GetMateriel(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
@@ -37,12 +33,12 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 		}
 
 		// tables in the right order
-		tables := []string{"engage e", "prestataire p"}
+		tables := []string{"loue l", "materiel m"}
 		// columns to look for
-		columns := []string{"p.idPRESTATAIRE", "p.nom", "p.prenom", "p.tel", "p.email", "p.metier", "p.description", "p.nom_entreprise", "p.rib", "p.valide", "p.idADRESSE", "p.image", "e.prix_a_payer"}
+		columns := []string{"m.idMATERIEL", "m.nom", "m.description", "m.prix", "m.quantite_disponible", "l.prix_a_payer", "l.date_location", "l.date_rendu"}
 		// on what to join
 		joins := []map[string]string{
-			{"e.idPRESTATAIRE": "p.idPRESTATAIRE"},
+			{"l.idMATERIEL": "m.idMATERIEL"},
 		}
 		// the where at the end
 		conditions := map[string]interface{}{
@@ -58,18 +54,30 @@ func GetPresta(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		var res []Presta
+		var res []Materiel
 		var prix float64
 
 		for rows.Next() {
-			var p Presta
+			var m Materiel
+			var DateLocation, DateRendu []uint8
 			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
-			err := rows.Scan(&p.IdPrestataire, &p.Nom, &p.Prenom, &p.Tel, &p.Email, &p.Metier, &p.Description, &p.NomEntreprise, &p.Rib, &p.Valide, &p.IdAdresse, &p.Image, &p.Prix)
+			err := rows.Scan(&m.IdMateriel, &m.Nom, &m.Description, &m.Prix, &m.QuantiteDisponible, &m.PrixAPayer, &DateLocation, &DateRendu)
 			if err != nil {
 				fmt.Println(err)
 			}
-			prix += p.Prix
-			res = append(res, p)
+
+			if DateLocation != nil {
+				t, _ := time.Parse("2006-01-02", string(DateLocation))
+				m.DateLocation = &t
+			}
+
+			if DateRendu != nil {
+				t, _ := time.Parse("2006-01-02", string(DateRendu))
+				m.DateRendu = &t
+			}
+
+			prix += m.Prix
+			res = append(res, m)
 		}
 
 		libraries.Response(w, map[string]interface{}{

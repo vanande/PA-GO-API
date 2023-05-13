@@ -21,7 +21,7 @@ func DeleteEngage(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		idp, OK := data["idt"].(string)
+		idp, OK := data["idp"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
