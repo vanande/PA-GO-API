@@ -1,4 +1,4 @@
-package activity
+package panier
 
 import (
 	"TogetherAndStronger/libraries"
@@ -7,44 +7,38 @@ import (
 	"net/http"
 )
 
-func MakeActivity(w http.ResponseWriter, req *http.Request) {
+func DeleteActivity(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
+
 	case "POST":
 		data := libraries.Body(w, req)
 
-		id, OK := data["id"].(string)
+		idp, OK := data["idp"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
 			}, http.StatusBadRequest)
 			return
 		}
-
-		price, OK := data["prix"].(float64)
+		ida, OK := data["ida"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
 			}, http.StatusBadRequest)
 			return
 		}
-
-		//											-->	change here <--
-		lastInsertID, err := query.InsertQuery("activite", map[string]interface{}{
-			// Data like that
-			"idlist_activite": id,
-			"prix":            price,
-		})
+		//						-->	change here <--  			-->	and here <--
+		err := query.DeleteQuery("panier_activite", "idPANIER = ? AND idCLIENT = ?", idp, ida)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{
-				"message": "Bad request",
-			}, http.StatusBadRequest)
+				"message": "No data found",
+			}, http.StatusNotFound)
 			return
 		}
 
 		libraries.Response(w, map[string]interface{}{
-			"message":        "Successfully added",
-			"lastIDInserted": lastInsertID,
+			"message": "Successfully deleted data",
 		}, http.StatusOK)
 	}
 }

@@ -1,4 +1,4 @@
-package activity
+package option
 
 import (
 	"TogetherAndStronger/libraries"
@@ -7,12 +7,12 @@ import (
 	"net/http"
 )
 
-func MakeActivity(w http.ResponseWriter, req *http.Request) {
+func Make(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case "POST":
 		data := libraries.Body(w, req)
 
-		id, OK := data["id"].(string)
+		idlo, OK := data["idlo"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
@@ -20,7 +20,15 @@ func MakeActivity(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		price, OK := data["prix"].(float64)
+		idla, OK := data["idla"].(string)
+		if !OK {
+			libraries.Response(w, map[string]interface{}{
+				"message": "Invalid ID",
+			}, http.StatusBadRequest)
+			return
+		}
+
+		ida, OK := data["ida"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
 				"message": "Invalid ID",
@@ -29,10 +37,10 @@ func MakeActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		//											-->	change here <--
-		lastInsertID, err := query.InsertQuery("activite", map[string]interface{}{
-			// Data like that
-			"idlist_activite": id,
-			"prix":            price,
+		lastInsertID, err := query.InsertQuery("tas.option", map[string]interface{}{
+			"idlist_option":   idlo,
+			"idlist_activite": idla,
+			"idActivite":      ida,
 		})
 		if err != nil {
 			fmt.Println(err)
