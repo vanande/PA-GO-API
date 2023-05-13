@@ -90,18 +90,12 @@ func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]s
 		return nil, err
 	}
 
-<<<<<<< HEAD
 	fmt.Println(query)
-=======
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	rows, err := db.Query(query, values...)
 	if err != nil {
 		return nil, err
 	}
-<<<<<<< HEAD
 	fmt.Println(rows)
-=======
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 
 	return rows, nil
 }

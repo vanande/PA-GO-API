@@ -11,41 +11,51 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-type Res struct {
-	IdCategory  int    `json:"idCategory"`
-	Nom         string `json:"nom"`
-	Description string `json:"description"`
+type Category struct {
+	IdCategory   int    `json:"idCategory"`
+	CategoryNom  string `json:"nom"`
+	CategoryDesc string `json:"description"`
+}
+
+type Option struct {
+	IdOption   int     `json:"idOption"`
+	OptionPrix float64 `json:"prix"`
+	OptionNom  string  `json:"nom"`
+	OptionDesc string  `json:"description"`
+}
+
+type Activite struct {
+	IdActivite       string     `json:"id"`
+	Nom              string     `json:"nom"`
+	Description      string     `json:"description"`
+	NbPersonneMin    int        `json:"nb_personne_min"`
+	NbPersonneMax    int        `json:"nb_personne_max"`
+	PrixMin          float64    `json:"prix_min"`
+	PrixMax          float64    `json:"prix_max"`
+	Image            string     `json:"image"`
+	Note             float64    `json:"note"`
+	CategoryActivite []Category `json:"category"`
+	Options          []Option   `json:"options"`
 }
 
 func ListActivities(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
 	case "POST":
-
 		enableCors(&w)
 
-		data := libraries.Body(w, req)
-
-		id, OK := data["id"].(int)
-		if !OK {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Invalid data",
-			}, http.StatusUnauthorized)
-			return
-		}
-
 		// tables in the right order
-		tables := []string{"category_activite", "category"}
+		tables := []string{"list_activite la", "list_option o", "category_activite ca", "category c"}
 		// columns to look for
-		columns := []string{"ca.idCategory", "c.nom", "c.description"}
+		columns := []string{"la.idlist_activite", "la.nom", "la.description", "la.nb_personne_min", "la.nb_personne_max", "la.prix_min", "la.prix_max", "la.image", "la.note", "c.idCategory", "c.nom", "c.description", "o.idlist_option", "o.prix", "o.nom", "o.description"}
 		// on what to join
 		joins := []map[string]string{
-			{"c.idCategory": "ca.idCategory"},
+			{"la.idlist_activite": "o.idlist_activite"},
+			{"la.idlist_activite": "ca.idlist_activite"},
+			{"ca.idCategory": "c.idCategory"},
 		}
 		// the where at the end
-		conditions := map[string]interface{}{
-			"idlist_activite": id,
-		}
+		conditions := map[string]interface{}{}
 
 		rows, err := query.SelectWithInnerJoin(tables, columns, joins, conditions)
 		if err != nil {
@@ -56,16 +66,39 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		var res []Res
+		var res []Activite
+		var lastA Activite
+		var lastO Option
+		var lastC Category
 
 		for rows.Next() {
-			var s Res
-			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
-			err := rows.Scan(&s.IdCategory, &s.Nom, &s.Description)
+			var a Activite
+			var o Option
+			var c Category
+
+			err = rows.Scan(&a.IdActivite, &a.Nom, &a.Description, &a.NbPersonneMin, &a.NbPersonneMax, &a.PrixMin, &a.PrixMax, &a.Image, &a.Note, &c.IdCategory, &c.CategoryNom, &c.CategoryDesc, &o.IdOption, &o.OptionPrix, &o.OptionNom, &o.OptionDesc)
 			if err != nil {
 				fmt.Println(err)
 			}
-			res = append(res, s)
+
+			if lastA.IdActivite != a.IdActivite {
+				a.Image = fmt.Sprintf("https://togetherandstronger.fr:9000/public/activity/%s", a.Image)
+				a.CategoryActivite = append(a.CategoryActivite, c)
+				a.Options = append(a.Options, o)
+				res = append(res, a)
+				lastA = a
+				lastC = c
+				lastO = o
+			} else {
+				if lastC.IdCategory != c.IdCategory {
+					res[len(res)-1].CategoryActivite = append(res[len(res)-1].CategoryActivite, c)
+					lastC = c
+				}
+				if lastO.IdOption != o.IdOption {
+					res[len(res)-1].Options = append(res[len(res)-1].Options, o)
+					lastO = o
+				}
+			}
 		}
 
 		libraries.Response(w, map[string]interface{}{
