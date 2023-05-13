@@ -8,6 +8,13 @@ import (
 	"time"
 )
 
+type Option struct {
+	IdOption   int     `json:"idOption"`
+	OptionPrix float64 `json:"o_prix"`
+	OptionNom  string  `json:"o_nom"`
+	OptionDesc string  `json:"o_description"`
+}
+
 type Res struct {
 	PrixTotal         float64    `json:"prix_total"`
 	DateDebut         *time.Time `json:"date_debut"`
@@ -19,6 +26,7 @@ type Res struct {
 	ListActiviteNom   string     `json:"la_nom"`
 	ListActiviteDesc  string     `json:"la_description"`
 	ListActiviteImage string     `json:"la_image"`
+	Options           []Option   `json:"options"`
 }
 
 func GetActivity(w http.ResponseWriter, req *http.Request) {
@@ -35,12 +43,12 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		// tables in the right order
-		tables := []string{"teambuilding_activite  ta ", "activite a", "list_activite la"}
+		tables := []string{"teambuilding_activite ta ", "activite a", "list_activite la", "tas.option o", "list_option lo"}
 		// columns to look for
-		columns := []string{"ta.prix_total", "ta.date_debut", "ta.date_fin", "ta.heure_debut", "ta.heure_fin", "ta.idActivite", "a.prix", "la.nom", "la.description", "la.image"}
+		columns := []string{"ta.prix_total", "ta.date_debut", "ta.date_fin", "ta.heure_debut", "ta.heure_fin", "ta.idActivite", "a.prix", "la.nom", "la.description", "la.image", "lo.idlist_option", "lo.prix", "lo.nom", "lo.description"}
 		// on what to join
 		joins := []map[string]string{
-			{"ta.idActivite": "a.idActivite"}, {"a.idList_activite": "la.idList_activite"},
+			{"ta.idActivite": "a.idActivite"}, {"a.idList_activite": "la.idList_activite"}, {"a.idActivite": "o.idActivite"}, {"o.idlist_option": "lo.idlist_option", "o.idlist_activite": "lo.idlist_activite"},
 		}
 		// the where at the end
 		conditions := map[string]interface{}{
@@ -57,14 +65,14 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		var res []Res
-		var prix float64
-		prix = 0
+		var lastS Res
 
 		for rows.Next() {
 			var s Res
+			var o Option
 			var dateDebut, dateFin, heureDebut, heureFin []uint8 // need that to deal with the []uint8 values returned by the query
 			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
-			err := rows.Scan(&s.PrixTotal, &dateDebut, &dateFin, &heureDebut, &heureFin, &s.IdActivite, &s.ActivitePrix, &s.ListActiviteNom, &s.ListActiviteDesc, &s.ListActiviteImage)
+			err := rows.Scan(&s.PrixTotal, &dateDebut, &dateFin, &heureDebut, &heureFin, &s.IdActivite, &s.ActivitePrix, &s.ListActiviteNom, &s.ListActiviteDesc, &s.ListActiviteImage, &o.IdOption, &o.OptionPrix, &o.OptionNom, &o.OptionDesc)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -99,14 +107,20 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 				s.HeureFin = &t
 			}
 
-			res = append(res, s)
-			prix += s.PrixTotal
+			s.Options = append(s.Options, o)
+
+			if lastS.IdActivite != s.IdActivite {
+				res = append(res, s)
+				lastS = s
+			} else {
+				res[len(res)-1].Options = append(res[len(res)-1].Options, o)
+				lastS = s
+			}
 		}
 
 		libraries.Response(w, map[string]interface{}{
-			"message":    "Successfully fetched data",
-			"data":       res,
-			"prix_total": prix,
+			"message": "Successfully fetched data",
+			"data":    res,
 		}, http.StatusOK)
 
 	default:
