@@ -1,1 +1,4 @@
 routes/bdd/init/config.json
+cert.pem
+ccert.pem
+key.pem

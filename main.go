@@ -18,7 +18,10 @@ import (
 	"TogetherAndStronger/routes/entity/team"
 	"TogetherAndStronger/routes/entity/teambuilding"
 	"TogetherAndStronger/routes/faq"
+<<<<<<< HEAD
 	"TogetherAndStronger/routes/list"
+=======
+>>>>>>> 1784635def712a3f39b341ecc4c2c2f38ab4d056
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
@@ -161,6 +164,7 @@ func main() {
 	http.HandleFunc("/signup/SignupCompany", signup.SignupCompany)
 	http.HandleFunc("/signup/SignupPresta", signup.SignupPresta)
 	http.HandleFunc("/lookfor/LookForSalary", lookfor.LookForSalary)
+<<<<<<< HEAD
 	http.HandleFunc("/lookfor/LookForCompany", lookfor.LookForCompany)
 	//	http.HandleFunc("/lookfor/LookForPresta", lookfor.LookForPresta)
 	http.HandleFunc("/salary/getActivities", salary.GetSalaryActivities)
@@ -183,4 +187,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+=======
+	// go run ..\..\go\go1.20.1\src\crypto\tls\generate_cert.go -host="127.0.0.1"
+	http.ListenAndServe(":9000", nil)
+	//err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", nil)
+>>>>>>> 1784635def712a3f39b341ecc4c2c2f38ab4d056
 }

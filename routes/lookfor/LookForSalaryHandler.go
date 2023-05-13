@@ -13,7 +13,11 @@ func LookForSalary(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
+<<<<<<< HEAD
 		selectQuery, err := query.SelectQuery("participant", []string{"*"}, map[string]interface{}{"idPARTICIPANT": data["id"], "idCLIENT": data["idc"]})
+=======
+		selectQuery, err := query.SelectQuery("participant", []string{"*"}, map[string]interface{}{"idPARTICIPANT": data["id"], "idEQUIPE": data["ide"], "idCLIENT": data["idc"]})
+>>>>>>> 1784635def712a3f39b341ecc4c2c2f38ab4d056
 		if err != nil {
 			fmt.Println(w, err)
 			libraries.Response(w, map[string]interface{}{

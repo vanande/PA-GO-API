@@ -37,8 +37,12 @@ func LoginSalary(w http.ResponseWriter, req *http.Request) {
 				"message": "Successfully logged in",
 				"idp":     idp,
 				"idc":     idc,
+<<<<<<< HEAD
 				"nom":     nom,
 				"prenom":  prenom,
+=======
+				"ide":     ide,
+>>>>>>> 1784635def712a3f39b341ecc4c2c2f38ab4d056
 			}, http.StatusOK)
 		}
 	}

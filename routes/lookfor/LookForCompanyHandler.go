@@ -1,4 +1,5 @@
 package lookfor
+<<<<<<< HEAD
 
 import (
 	"TogetherAndStronger/libraries"
@@ -65,3 +66,5 @@ func LookForCompany(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 }
+=======
+>>>>>>> 1784635def712a3f39b341ecc4c2c2f38ab4d056
