@@ -118,9 +118,18 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 
+		var totalPrice float64
+		for _, r := range res {
+			totalPrice += r.ActivitePrix
+			for _, o := range r.Options {
+				totalPrice += o.OptionPrix
+			}
+		}
+
 		libraries.Response(w, map[string]interface{}{
-			"message": "Successfully fetched data",
-			"data":    res,
+			"message":    "Successfully fetched data",
+			"data":       res,
+			"totalPrice": totalPrice,
 		}, http.StatusOK)
 
 	default:
