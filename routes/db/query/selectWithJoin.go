@@ -50,13 +50,18 @@ import (
 //		}
 //
 //		fmt.Println(res)
-func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]string, conditions map[string]interface{}) (*sql.Rows, error) {
+func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]string, conditions map[string]interface{}, orderBy ...string) (*sql.Rows, error) {
 
 	if len(tables) < 2 {
 		return nil, fmt.Errorf("tables : %d < 2. Need at least 2", len(tables))
 	}
 	if len(tables)-len(joins) != 1 {
 		return nil, fmt.Errorf("tables : %d, joins : %d. Need n+1 tables than there is joins", len(tables), len(joins))
+	}
+
+	orderByStr := ""
+	if len(orderBy) > 0 {
+		orderByStr = orderBy[0]
 	}
 
 	// base query : SELECT column1, column2, ... FROM table1
@@ -83,6 +88,11 @@ func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]s
 			values = append(values, value)
 		}
 		query += " WHERE " + strings.Join(where, " AND ")
+	}
+
+	// ORDER BY
+	if orderByStr != "" {
+		query += " ORDER BY " + orderByStr
 	}
 
 	db, err := db2.InitDB()

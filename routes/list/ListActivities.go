@@ -57,7 +57,9 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 		// the where at the end
 		conditions := map[string]interface{}{}
 
-		rows, err := query.SelectWithInnerJoin(tables, columns, joins, conditions)
+		orderBy := "la.idlist_activite ASC"
+
+		rows, err := query.SelectWithInnerJoin(tables, columns, joins, conditions, orderBy)
 		if err != nil {
 			fmt.Println(err)
 			libraries.Response(w, map[string]interface{}{
