@@ -43,11 +43,7 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		// tables in the right order
-<<<<<<< HEAD
-		tables := []string{"teambuilding_activite ta ", "activite a", "list_activite la", "tas.option o", "list_option lo"}
-=======
 		tables := []string{"teambuilding_activite ta ", "activite a", "list_activite la, tas.option o, list_option lo"}
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		// columns to look for
 		columns := []string{"ta.prix_total", "ta.date_debut", "ta.date_fin", "ta.heure_debut", "ta.heure_fin", "ta.idActivite", "a.prix", "la.nom", "la.description", "la.image", "lo.idlist_option", "lo.prix", "lo.nom", "lo.description"}
 		// on what to join
@@ -69,11 +65,7 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		var res []Res
-<<<<<<< HEAD
 		var lastS Res
-=======
-		var last_s Res
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 
 		for rows.Next() {
 			var s Res
@@ -117,7 +109,6 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 
 			s.Options = append(s.Options, o)
 
-<<<<<<< HEAD
 			if lastS.IdActivite != s.IdActivite {
 				res = append(res, s)
 				lastS = s
@@ -134,22 +125,10 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 				totalPrice += o.OptionPrix
 			}
 		}
-
 		libraries.Response(w, map[string]interface{}{
 			"message":    "Successfully fetched data",
 			"data":       res,
 			"prix_total": totalPrice,
-=======
-			if last_s.IdActivite != s.IdActivite {
-				res = append(res, s)
-			}
-			last_s = s
-		}
-
-		libraries.Response(w, map[string]interface{}{
-			"message": "Successfully fetched data",
-			"data":    res,
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		}, http.StatusOK)
 
 	default:

@@ -7,76 +7,74 @@ import (
 	"net/http"
 )
 
-<<<<<<< HEAD
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-=======
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
+type Res struct {
+	IdCategory  int    `json:"idCategory"`
+	Nom         string `json:"nom"`
+	Description string `json:"description"`
+}
+
 func ListActivities(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
 	case "POST":
-<<<<<<< HEAD
+
 		enableCors(&w)
-=======
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
-		selectQuery, err := query.SelectQuery("list_activite", []string{"*"}, map[string]interface{}{})
+
+		data := libraries.Body(w, req)
+
+		id, OK := data["id"].(int)
+		if !OK {
+			libraries.Response(w, map[string]interface{}{
+				"message": "Invalid data",
+			}, http.StatusUnauthorized)
+			return
+		}
+
+		// tables in the right order
+		tables := []string{"category_activite", "category"}
+		// columns to look for
+		columns := []string{"ca.idCategory", "c.nom", "c.description"}
+		// on what to join
+		joins := []map[string]string{
+			{"c.idCategory": "ca.idCategory"},
+		}
+		// the where at the end
+		conditions := map[string]interface{}{
+			"idlist_activite": id,
+		}
+
+		rows, err := query.SelectWithInnerJoin(tables, columns, joins, conditions)
 		if err != nil {
-			fmt.Println(w, err)
+			fmt.Println(err)
 			libraries.Response(w, map[string]interface{}{
 				"message": "No data found",
 			}, http.StatusNotFound)
 			return
 		}
-		defer selectQuery.Close()
 
-		var rows []map[string]interface{}
-		for selectQuery.Next() {
-			columns, _ := selectQuery.Columns()
-			values := make([]interface{}, len(columns))
-			scanArgs := make([]interface{}, len(values))
-			for i := range values {
-				scanArgs[i] = &values[i]
-			}
-			err = selectQuery.Scan(scanArgs...)
+		var res []Res
+
+		for rows.Next() {
+			var s Res
+			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
+			err := rows.Scan(&s.IdCategory, &s.Nom, &s.Description)
 			if err != nil {
 				fmt.Println(err)
-				continue
 			}
-
-			row := make(map[string]interface{})
-			for i, col := range values {
-				if col != nil {
-					switch v := col.(type) {
-					case []byte:
-						row[columns[i]] = string(v)
-					default:
-						row[columns[i]] = v
-					}
-				}
-			}
-			rows = append(rows, row)
-		}
-
-		if len(rows) == 0 {
-			libraries.Response(w, map[string]interface{}{
-				"message": "Invalid data",
-			}, http.StatusNotFound)
-			return
+			res = append(res, s)
 		}
 
 		libraries.Response(w, map[string]interface{}{
 			"message": "Successfully fetched data",
-			"data":    rows,
+			"data":    res,
 		}, http.StatusOK)
-<<<<<<< HEAD
 
 	case "OPTIONS":
 		fmt.Println("Preflight handled")
 		w.WriteHeader(http.StatusOK)
-=======
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	}
 }

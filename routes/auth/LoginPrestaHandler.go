@@ -3,22 +3,14 @@ package auth
 import (
 	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/db/query"
-	"fmt"
 	"net/http"
 )
 
-<<<<<<< HEAD
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func LoginPresta(w http.ResponseWriter, req *http.Request) {
-
-=======
-func LoginPresta(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 	switch req.Method {
 	case "POST":
 
@@ -44,19 +36,10 @@ func LoginPresta(w http.ResponseWriter, req *http.Request) {
 			if err != nil {
 				return
 			}
-<<<<<<< HEAD
-=======
-			println(id)
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 
 			role := "prestataire"
 			token, err := libraries.CreateToken(role, id)
 			if err != nil {
-<<<<<<< HEAD
-				fmt.Errorf("Error while generating the token : %v", err)
-=======
-				fmt.Errorf("Error while generating token: %v", err)
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}
 
 			libraries.Response(w, map[string]interface{}{

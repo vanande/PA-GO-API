@@ -5,10 +5,7 @@ import (
 	"TogetherAndStronger/routes/db/query"
 	"fmt"
 	"net/http"
-<<<<<<< HEAD
-=======
 	"strings"
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 )
 
 func LoginAdmin(w http.ResponseWriter, req *http.Request) {
@@ -18,9 +15,6 @@ func LoginAdmin(w http.ResponseWriter, req *http.Request) {
 	case "POST":
 		data := libraries.Body(w, req)
 
-<<<<<<< HEAD
-		selectQuery, err := query.SelectQuery("admin", []string{"idADMIN", "role"}, map[string]interface{}{"nom": data["nom"], "password": data["password"]})
-=======
 		nom, OK := data["nom"].(string)
 		if !OK {
 			libraries.Response(w, map[string]interface{}{
@@ -38,7 +32,6 @@ func LoginAdmin(w http.ResponseWriter, req *http.Request) {
 		}
 
 		selectQuery, err := query.SelectQuery("admin", []string{"idADMIN", "role"}, map[string]interface{}{"nom": strings.ToLower(nom), "password": password})
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 		if err != nil {
 			return
 		}
@@ -58,19 +51,12 @@ func LoginAdmin(w http.ResponseWriter, req *http.Request) {
 			println(id)
 
 			var role string
-<<<<<<< HEAD
-			if rang < 2 {
+			if rang == 1 {
 				role = "employee"
-			} else {
+			} else if rang == 2 {
 				role = "admin"
-=======
-			if rang < 1 {
-				role = "noob"
-			} else if rang < 2 {
-				role = "admin"
-			} else {
+			} else if rang == 3 {
 				role = "superadmin"
->>>>>>> 24452d1a9b3dcd7ccc9c4f6bc6a865ae32926d2c
 			}
 
 			token, err := libraries.CreateToken(role, id)
