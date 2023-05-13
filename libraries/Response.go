@@ -2,10 +2,22 @@ package libraries
 
 import (
 	"encoding/json"
+	"io"
+	"log"
 	"net/http"
+	"os"
 )
 
 func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
+
+	logFile, err := os.OpenFile("log.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println("Error opening log file:", err)
+	}
+	defer logFile.Close()
+
+	log.SetOutput(io.MultiWriter(os.Stderr, logFile))
+	log.Printf("Response - Code: %d - Body: %v\n", code, message)
 
 	response := map[string]interface{}{}
 	for key, value := range message {
@@ -17,10 +29,7 @@ func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8	")
 	w.WriteHeader(code)
 	w.Write(jsonResponse)
 }

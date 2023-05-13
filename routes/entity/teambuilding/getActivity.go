@@ -129,7 +129,7 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		libraries.Response(w, map[string]interface{}{
 			"message":    "Successfully fetched data",
 			"data":       res,
-			"totalPrice": totalPrice,
+			"prix_total": totalPrice,
 		}, http.StatusOK)
 
 	default:

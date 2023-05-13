@@ -1,0 +1,2 @@
+2023/05/13 11:48:16 Response - Code: 200 - Body: map[data:{44 60 Gourmand Initiation à l'art de la dégustation Apprenez à déguster le vin, le fromage ou le chocolat en équipe lors de cette initiation animée par notre expert en dégustation.} message:Successfully fetched data]
+2023/05/13 11:48:26 Response - Code: 200 - Body: map[data:{44 60 Gourmand Initiation à l'art de la dégustation Apprenez à déguster le vin, le fromage ou le chocolat en équipe lors de cette initiation animée par notre expert en dégustation.} message:Successfully fetched data]

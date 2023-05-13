@@ -116,6 +116,7 @@ func main() {
 	mux.HandleFunc("/teambuilding/getActivity", teambuilding.GetActivity)
 	mux.HandleFunc("/teambuilding/getPresta", teambuilding.GetPresta)
 	mux.HandleFunc("/teambuilding/getMateriel", teambuilding.GetMateriel)
+	mux.HandleFunc("/teambuilding/getSalle", teambuilding.GetSalle)
 	mux.HandleFunc("/teambuilding/addEngage", teambuilding.AddEngage)
 	mux.HandleFunc("/teambuilding/deleteEngage", teambuilding.DeleteEngage)
 
