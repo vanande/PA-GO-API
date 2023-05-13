@@ -73,6 +73,9 @@ func main() {
 	mux.HandleFunc("/activity/addAnime", activity.AddAnime)
 	mux.HandleFunc("/activity/deleteAnime", activity.DeleteAnime)
 	mux.HandleFunc("/activity/getAnime", activity.GetAnime)
+	mux.HandleFunc("/activity/getActivityOption", activity.GetActivityOption)
+	mux.HandleFunc("/activity/addActivityOption", activity.AddActivityOption)
+	mux.HandleFunc("/activity/deleteActivityOption", activity.DeleteActivityOption)
 
 	mux.HandleFunc("/place/addPlace", place.AddPlace)
 	mux.HandleFunc("/place/deletePlace", place.DeletePlace)
@@ -111,6 +114,10 @@ func main() {
 	mux.HandleFunc("/teambuilding/update", teambuilding.Update)
 	mux.HandleFunc("/teambuilding/addActivity", teambuilding.AddActivity)
 	mux.HandleFunc("/teambuilding/getActivity", teambuilding.GetActivity)
+	mux.HandleFunc("/teambuilding/getPresta", teambuilding.GetPresta)
+	mux.HandleFunc("/teambuilding/getMateriel", teambuilding.GetMateriel)
+	mux.HandleFunc("/teambuilding/addEngage", teambuilding.AddEngage)
+	mux.HandleFunc("/teambuilding/deleteEngage", teambuilding.DeleteEngage)
 
 	mux.HandleFunc("/team/add", team.Add)
 	mux.HandleFunc("/team/delete", team.Delete)

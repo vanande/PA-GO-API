@@ -57,6 +57,8 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 		}
 
 		var res []Res
+		var prix float64
+		prix = 0
 
 		for rows.Next() {
 			var s Res
@@ -98,11 +100,13 @@ func GetActivity(w http.ResponseWriter, req *http.Request) {
 			}
 
 			res = append(res, s)
+			prix += s.PrixTotal
 		}
 
 		libraries.Response(w, map[string]interface{}{
-			"message": "Successfully fetched data",
-			"data":    res,
+			"message":    "Successfully fetched data",
+			"data":       res,
+			"prix_total": prix,
 		}, http.StatusOK)
 
 	default:
