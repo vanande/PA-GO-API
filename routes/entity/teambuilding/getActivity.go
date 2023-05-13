@@ -8,6 +8,14 @@ import (
 	"time"
 )
 
+type Option struct {
+	IdOption    int     `json:"idOption"`
+	OptionPrix  float64 `json:"o_prix"`
+	OptionNom   string  `json:"o_nom"`
+	OptionDesc  string  `json:"o_description"`
+	OptionImage string  `json:"o_image"`
+}
+
 type Res struct {
 	PrixTotal         float64    `json:"prix_total"`
 	DateDebut         *time.Time `json:"date_debut"`
@@ -19,6 +27,7 @@ type Res struct {
 	ListActiviteNom   string     `json:"la_nom"`
 	ListActiviteDesc  string     `json:"la_description"`
 	ListActiviteImage string     `json:"la_image"`
+	Option            []Option   `json:"option"`
 }
 
 func GetActivity(w http.ResponseWriter, req *http.Request) {
