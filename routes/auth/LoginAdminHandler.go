@@ -35,7 +35,7 @@ func LoginAdmin(w http.ResponseWriter, req *http.Request) {
 
 			var role string
 			if rang < 2 {
-				role = "noob"
+				role = "employee"
 			} else {
 				role = "admin"
 			}

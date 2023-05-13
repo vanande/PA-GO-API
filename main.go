@@ -109,6 +109,8 @@ func main() {
 	mux.HandleFunc("/teambuilding/delete", teambuilding.Delete)
 	mux.HandleFunc("/teambuilding/get", teambuilding.Get)
 	mux.HandleFunc("/teambuilding/update", teambuilding.Update)
+	mux.HandleFunc("/teambuilding/addActivity", teambuilding.AddActivity)
+	mux.HandleFunc("/teambuilding/getActivity", teambuilding.GetActivity)
 
 	mux.HandleFunc("/team/add", team.Add)
 	mux.HandleFunc("/team/delete", team.Delete)
@@ -120,6 +122,7 @@ func main() {
 	mux.HandleFunc("/option/delete", option.Delete)
 	mux.HandleFunc("/option/get", option.Get)
 	mux.HandleFunc("/option/update", option.Update)
+	mux.HandleFunc("/option/make", option.Make)
 
 	mux.HandleFunc("/material/add", material.Add)
 	mux.HandleFunc("/material/delete", material.Delete)
