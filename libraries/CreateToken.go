@@ -2,14 +2,15 @@ package libraries
 
 import (
 	"github.com/golang-jwt/jwt"
+	"strconv"
 	"time"
 )
 
 const privateKey = "42"
 
 type UserInfo struct {
-	Name string
-	Kind string
+	Id   string
+	Role string
 }
 
 type CustomClaimsExample struct {
@@ -18,17 +19,17 @@ type CustomClaimsExample struct {
 	UserInfo
 }
 
-func CreateToken(user string, id int) (string, error) {
+func CreateToken(role string, id int) (string, error) {
 
 	t := jwt.New(jwt.SigningMethodHS256)
 
 	t.Claims = &CustomClaimsExample{
 		&jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * 90).Unix(),
-			Id:        string(rune(id)),
+			Issuer:    "TogetherAndStronger",
 		},
 		"level1",
-		UserInfo{user, "human"},
+		UserInfo{strconv.Itoa(id), role},
 	}
 
 	return t.SignedString([]byte(privateKey))
