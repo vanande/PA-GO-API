@@ -17,7 +17,7 @@ type Adresse struct {
 }
 
 type Presta struct {
-	IdPrestataire  string  `json:"idPRESTATAIRE"`
+	Id             string  `json:"id"`
 	Nom            string  `json:"nom"`
 	Prenom         string  `json:"prenom"`
 	Tel            string  `json:"tel"`
@@ -80,7 +80,7 @@ func GetAllOrOne(w http.ResponseWriter, req *http.Request) {
 			var s Presta
 			var a Adresse
 			// let copilot do the job -> ctrl+x (the line under 'err := ...') -> wait a bit -> tab
-			err := rows.Scan(&s.IdPrestataire, &s.Nom, &s.Prenom, &s.Tel, &s.Email, &s.Metier, &s.Description, &s.Nom_entreprise, &s.Rib, &s.Valide, &a.Adresse, &a.Complement, &a.Ville, &a.Code_postal, &a.Pays, &a.IdAdresse)
+			err := rows.Scan(&s.Id, &s.Nom, &s.Prenom, &s.Tel, &s.Email, &s.Metier, &s.Description, &s.Nom_entreprise, &s.Rib, &s.Valide, &a.Adresse, &a.Complement, &a.Ville, &a.Code_postal, &a.Pays, &a.IdAdresse)
 			if err != nil {
 				log.Println(err)
 			}

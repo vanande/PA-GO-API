@@ -28,6 +28,7 @@ func SelectQuery(tableName string, columns []string, conditions map[string]inter
 		return nil, err
 	}
 
+	fmt.Println(query)
 	rows, err := db.Query(query, values...)
 	if err != nil {
 		return nil, err
