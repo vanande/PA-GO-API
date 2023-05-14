@@ -1,6 +1,7 @@
 package main
 
 import (
+	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
@@ -38,6 +39,11 @@ func (l *Logger) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	start := time.Now()
 	l.handler.ServeHTTP(w, req)
 	log.Printf("%s, %s, %v", req.Method, req.URL.Path, time.Since(start))
+	libraries.WriteLogs(map[string]interface{}{
+		"method": req.Method,
+		"path":   req.URL.Path,
+		"time":   time.Since(start),
+	})
 }
 
 func NewLogger(handlerToWrap http.Handler) *Logger {
@@ -156,7 +162,7 @@ func main() {
 
 	//handler := cors.Default().Handler(mux)
 	handler := NewLogger(mux)
-	err := http.ListenAndServeTLS(":9001", "cert.pem", "key.pem", handler)
+	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
 	if err != nil {
 		panic(err)
 	}
