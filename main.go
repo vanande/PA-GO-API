@@ -19,15 +19,29 @@ import (
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
+	"log"
 	"net/http"
 	_ "strings"
-
-	"github.com/rs/cors"
+	"time"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Best angular website of the century incoming... ")
 	fmt.Println("Got one")
+}
+
+type Logger struct {
+	handler http.Handler
+}
+
+func (l *Logger) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	start := time.Now()
+	l.handler.ServeHTTP(w, req)
+	log.Printf("%s, %s, %v", req.Method, req.URL.Path, time.Since(start))
+}
+
+func NewLogger(handlerToWrap http.Handler) *Logger {
+	return &Logger{handlerToWrap}
 }
 
 func main() {
@@ -140,9 +154,9 @@ func main() {
 	mux.HandleFunc("/material/addRental", material.AddRental)
 	mux.HandleFunc("/material/deleteRental", material.DeleteRental)
 
-	handler := cors.Default().Handler(mux)
-
-	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
+	//handler := cors.Default().Handler(mux)
+	handler := NewLogger(mux)
+	err := http.ListenAndServeTLS(":9001", "cert.pem", "key.pem", handler)
 	if err != nil {
 		panic(err)
 	}

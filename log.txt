@@ -319,3 +319,9 @@ May 13 15:51:47 vps-caf35801 main[171264]: 2023/05/13 15:51:47 Response - Code: 
 2023/05/13 21:57:07 Response - Code: 200 - Message: Successfully fetched data
 2023/05/13 21:57:07 Response - Code: 200 - Message: Successfully fetched data
 2023/05/13 22:02:55 Response - Code: 200 - Message: Successfully fetched data
+2023/05/13 22:11:33 Response - Code: 401 - Message: Invalid data
+2023/05/13 22:11:49 Response - Code: 200 - Message: Successfully logged in
+2023/05/13 22:11:51 Response - Code: 200 - Message: Successfully fetched data
+2023/05/13 22:11:51 Response - Code: 200 - Message: Successfully fetched data
+2023/05/13 23:58:41 Response - Code: 200 - Message: Successfully fetched data
+2023/05/13 23:59:01 Response - Code: 200 - Message: Successfully fetched data
