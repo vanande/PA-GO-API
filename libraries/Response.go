@@ -7,7 +7,11 @@ import (
 
 func Response(w http.ResponseWriter, message map[string]interface{}, code int) {
 
-	err := WriteLogs(message)
+	msg := map[string]interface{}{
+		"message": message,
+		"code":    code,
+	}
+	err := WriteLogs(msg)
 
 	response := map[string]interface{}{}
 	for key, value := range message {

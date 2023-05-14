@@ -1,9 +1,11 @@
 package libraries
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func WriteLogs(message map[string]interface{}) error {
@@ -13,7 +15,18 @@ func WriteLogs(message map[string]interface{}) error {
 	}
 	defer logFile.Close()
 
+	if len(message) == 0 {
+		log.Println("No message to log")
+		return err
+	}
+
 	log.SetOutput(io.MultiWriter(os.Stderr, logFile))
-	log.Printf("Message: %s\n", message)
+
+	var logMessage string
+	for key, value := range message {
+		logMessage += fmt.Sprintf("%s:%v ", key, value)
+	}
+	log.Println(strings.TrimSpace(logMessage))
+
 	return err
 }

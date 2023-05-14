@@ -200,3 +200,16 @@ May 14 07:49:04 vps-caf35801 main[183529]: 2023/05/14 07:49:04 Response - Code: 
 May 14 07:51:34 vps-caf35801 main[183529]: Got one
 2023/05/14 08:01:53 Response - Code: 200 - Message: No message provided
 2023/05/14 08:12:13 Message: map[method:GET path:/hello time:166.573µs]
+2023/05/14 08:24:29 path : /hello
+2023/05/14 08:24:29 time : 160.947µs
+2023/05/14 08:24:29 method : GET
+2023/05/14 08:25:11 method:GET
+2023/05/14 08:25:11 path:/hello
+2023/05/14 08:25:11 time:516.124µs
+2023/05/14 08:25:11 
+2023/05/14 08:25:56 method:GET
+2023/05/14 08:25:56 path:/hello
+2023/05/14 08:25:56 time:208.472µs
+2023/05/14 08:25:56 
+2023/05/14 08:28:58 method:GET path:/hello time:223.637µs
+2023/05/14 08:29:40 method:POST path:/hello time:192.256µs
