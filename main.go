@@ -49,6 +49,37 @@ func (l *Logger) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 func NewLogger(handlerToWrap http.Handler) *Logger {
 	return &Logger{handlerToWrap}
 }
+func allow(next http.HandlerFunc, expectedRole []string) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		tokenString, err := libraries.GetTokenFromHeader(r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		role, err := libraries.GetRole(tokenString)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		var found bool
+		for _, r := range expectedRole {
+			if role == r {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	}
+}
 
 func main() {
 	mux := http.NewServeMux()
@@ -57,7 +88,7 @@ func main() {
 
 	// Start the server
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
-	mux.HandleFunc("/", hello)
+	mux.HandleFunc("/", allow(hello, []string{"admin", "employee", "prestataire", "salary", "superadmin"}))
 	mux.HandleFunc("/faq", faq.Faq)
 	mux.HandleFunc("/db/create", db_handler.Create)
 	mux.HandleFunc("/db/select", db_handler.Select)

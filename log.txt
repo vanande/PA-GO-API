@@ -213,3 +213,62 @@ May 14 07:51:34 vps-caf35801 main[183529]: Got one
 2023/05/14 08:25:56 
 2023/05/14 08:28:58 method:GET path:/hello time:223.637µs
 2023/05/14 08:29:40 method:POST path:/hello time:192.256µs
+2023/05/14 08:43:49 method:GET path:/hello time:157.569µs
+2023/05/14 08:44:42 message:map[id:72 message:Insert success] code:200
+2023/05/14 08:44:42 method:POST path:/signup/SignupPresta time:6.925542ms
+2023/05/14 08:44:54 code:200 message:map[id:1 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNTM5NTQsImp0aSI6Ilx1MDAwMSIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJhZG1pbiIsIktpbmQiOiJodW1hbiJ9.BHWAV6YcgY21ewEmTqVnak_LJIVOqm9MSH-U2yB6dp8]
+2023/05/14 08:44:54 method:POST path:/auth/LoginAdmin time:6.953353ms
+2023/05/14 08:45:56 method:GET path:/hello time:307.448µs
+2023/05/14 08:46:03 path:/hello time:77.378µs method:GET
+2023/05/14 08:46:14 path:/hello time:526.216µs method:GET
+2023/05/14 08:47:01 message:map[id:1 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNTQwODEsImp0aSI6Ilx1MDAwMSIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJhZG1pbiIsIktpbmQiOiJodW1hbiJ9.YTFTAtxoN_QV-YtxyIvPa1u6XLxekeFmCHKU6UQJHYk] code:200
+2023/05/14 08:47:01 method:POST path:/auth/LoginAdmin time:6.465492ms
+2023/05/14 08:47:39 method:GET path:/hello time:49.915µs
+2023/05/14 08:47:46 method:GET path:/hello time:48.468µs
+2023/05/14 08:51:52 method:GET path:/hello time:202.098µs
+2023/05/14 08:56:31 message:map[id:2 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNTk5OTEsImp0aSI6Ilx1MDAwMiIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJlbXBsb3llZSIsIktpbmQiOiJodW1hbiJ9._DqMp-YiaJf4TrhP7Jn8YVro9FgGD9MrMbbUTlznfxc] code:200
+2023/05/14 08:56:31 method:POST path:/auth/LoginAdmin time:8.73867ms
+2023/05/14 08:56:43 method:GET path:/hello time:88.091µs
+2023/05/14 08:59:51 method:GET path:/hello time:230.52µs
+2023/05/14 08:59:57 message:map[id:2 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjAxOTcsImp0aSI6Ilx1MDAwMiIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJlbXBsb3llZSIsIktpbmQiOiJodW1hbiJ9.K1pYv1yd3zFVoDCtkymaZzcsKL8xzRbqPuju-Pm5ImQ] code:200
+2023/05/14 08:59:57 method:POST path:/auth/LoginAdmin time:5.1882ms
+2023/05/14 09:00:15 method:GET path:/hello time:51.022µs
+2023/05/14 09:03:00 method:GET path:/hello time:130.696µs
+2023/05/14 09:05:12 method:GET path:/hello time:400.077µs
+2023/05/14 09:06:43 message:map[id:2 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjA2MDMsImp0aSI6Ilx1MDAwMiIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJlbXBsb3llZSIsIktpbmQiOiJodW1hbiJ9.QzLLdPmNwi3izdcwZkm1bmFqDoVTAktnKbIaOB1weXs] code:200
+2023/05/14 09:06:43 path:/auth/LoginAdmin time:7.138826ms method:POST
+2023/05/14 09:08:10 time:912.347µs method:GET path:/hello
+2023/05/14 09:11:08 method:GET path:/hello time:808.862µs
+2023/05/14 09:13:45 method:GET path:/hello time:80.032µs
+2023/05/14 09:16:39 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjExOTksImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.Wk2fKW9g5uzfZW39TfYYNtG78AnrSG1yFJqQHcHSclE] code:200
+2023/05/14 09:16:39 method:POST path:/auth/LoginPresta time:7.83134ms
+2023/05/14 09:16:43 message:map[id:133 message:Successfully logged in] code:200
+2023/05/14 09:16:43 method:POST path:/auth/LoginCompany time:4.937904ms
+2023/05/14 09:16:46 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjEyMDYsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.iI07AEwlwmAYcUSQaTDjiymX3Bobl68-lzArHtTwn2s] code:200
+2023/05/14 09:16:46 method:POST path:/auth/LoginPresta time:4.82349ms
+2023/05/14 09:21:36 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE0OTYsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.HR77OouYGnOp514_Bx00zkZJ20a8_41xsiom6JG65lA] code:200
+2023/05/14 09:21:36 time:4.77028ms method:POST path:/auth/LoginPresta
+2023/05/14 09:21:57 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE1MTcsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.CMMLC7l8S-_tUXGweeuCdKBzTQXWAwhs9A-C_OctONM] code:200
+2023/05/14 09:21:57 path:/auth/LoginPresta time:31.951409ms method:POST
+2023/05/14 09:22:34 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE1NTQsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.xNYJwwXfBYGmJVDFT-Hcak8PSWjfWvCu47xQZCPavMo] code:200
+2023/05/14 09:22:34 method:POST path:/auth/LoginPresta time:5.019635ms
+2023/05/14 09:23:03 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE1ODMsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.KfcCXw-wJuT5tpjt7bsJ9r6LeYixngr2bIyjQ9EtB-4] code:200
+2023/05/14 09:23:03 time:4.80573ms method:POST path:/auth/LoginPresta
+2023/05/14 09:24:16 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE2NTYsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.FLPZhs0zorhJyOTAfR9UA9-6TPmmU7kddyIV7Abpyuk] code:200
+2023/05/14 09:24:16 method:POST path:/auth/LoginPresta time:5.13774ms
+2023/05/14 09:25:04 code:200 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE3MDQsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.Ruv7W7NqFm8Xqce8XuMMbmIv54lxoz5DSE5RCZsJA70]
+2023/05/14 09:25:04 method:POST path:/auth/LoginPresta time:5.083355ms
+2023/05/14 09:29:20 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjE5NjAsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.GgqZuJGAbiqjn58dJwi2BD-2jP34Af6Z8TL-MHRFGNw] code:200
+2023/05/14 09:29:20 method:POST path:/auth/LoginPresta time:4.913541ms
+2023/05/14 09:33:28 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjIyMDgsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.DIZOsffvziy2e9MBSZSGSpwBtOnsBb0E0xPfbXiwu7k] code:200
+2023/05/14 09:33:28 path:/auth/LoginPresta time:6.81987ms method:POST
+2023/05/14 09:33:41 time:58.722µs method:GET path:/hello
+2023/05/14 09:33:55 path:/hello time:59.268µs method:GET
+2023/05/14 09:34:08 method:GET path:/hello time:162.311µs
+2023/05/14 09:42:51 method:GET path:/hello time:350.637µs
+2023/05/14 09:42:55 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjI3NzUsImp0aSI6Ilx1MDAwMyIsIlRva2VuVHlwZSI6ImxldmVsMSIsIk5hbWUiOiJwcmVzdGF0YWlyZSIsIktpbmQiOiJodW1hbiJ9.JEtZa_T78BrI9s1ApqD1In7_5Vstzmav4xdl_BQEt2Q] code:200
+2023/05/14 09:42:55 method:POST path:/auth/LoginPresta time:5.560092ms
+2023/05/14 09:43:17 code:200 message:map[id:3 message:Successfully logged in token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQwNjI3OTcsImlzcyI6IlRvZ2V0aGVyQW5kU3Ryb25nZXIiLCJUb2tlblR5cGUiOiJsZXZlbDEiLCJJZCI6IjMiLCJSb2xlIjoicHJlc3RhdGFpcmUifQ.M-f4mxOt8dw_Z_-sdibm8UeBEjGEqATyWutcJ9JDWMo]
+2023/05/14 09:43:17 method:POST path:/auth/LoginPresta time:6.958401ms
+2023/05/14 09:43:31 time:167.511µs method:GET path:/hello
+2023/05/14 09:44:20 method:GET path:/hello time:588.863µs
