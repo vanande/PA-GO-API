@@ -24,7 +24,7 @@ func CreateToken(user string, id int) (string, error) {
 
 	t.Claims = &CustomClaimsExample{
 		&jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute * 1).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 90).Unix(),
 			Id:        string(rune(id)),
 		},
 		"level1",

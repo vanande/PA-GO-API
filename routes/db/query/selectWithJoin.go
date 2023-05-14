@@ -50,7 +50,7 @@ import (
 //		}
 //
 //		fmt.Println(res)
-func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]string, conditions map[string]interface{}) (*sql.Rows, error) {
+func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]string, conditions map[string]interface{}, orderBy ...string) (*sql.Rows, error) {
 
 	if len(tables) < 2 {
 		return nil, fmt.Errorf("tables : %d < 2. Need at least 2", len(tables))
@@ -83,6 +83,11 @@ func SelectWithInnerJoin(tables []string, columns []string, joins []map[string]s
 			values = append(values, value)
 		}
 		query += " WHERE " + strings.Join(where, " AND ")
+	}
+
+	// ORDER BY
+	if len(orderBy) > 0 {
+		query += " ORDER BY " + orderBy[0]
 	}
 
 	db, err := db2.InitDB()

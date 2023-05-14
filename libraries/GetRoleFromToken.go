@@ -7,7 +7,7 @@ import (
 
 func GetRole(tokenString string) (string, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte("42"), nil
+		return []byte(privateKey), nil
 	})
 
 	if err != nil || !token.Valid {

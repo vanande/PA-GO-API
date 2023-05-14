@@ -1,6 +1,7 @@
 package main
 
 import (
+	"TogetherAndStronger/libraries"
 	"TogetherAndStronger/routes/auth"
 	"TogetherAndStronger/routes/db/db_handler"
 	"TogetherAndStronger/routes/entity/activity"
@@ -19,9 +20,10 @@ import (
 	"TogetherAndStronger/routes/lookfor"
 	"TogetherAndStronger/routes/signup"
 	"fmt"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
+	_ "strings"
+	"time"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -29,15 +31,64 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Got one")
 }
 
-func main() {
+type Logger struct {
+	handler http.Handler
+}
 
+func (l *Logger) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	start := time.Now()
+	l.handler.ServeHTTP(w, req)
+	log.Printf("%s, %s, %v", req.Method, req.URL.Path, time.Since(start))
+	libraries.WriteLogs(map[string]interface{}{
+		"method": req.Method,
+		"path":   req.URL.Path,
+		"time":   time.Since(start),
+	})
+}
+
+func NewLogger(handlerToWrap http.Handler) *Logger {
+	return &Logger{handlerToWrap}
+}
+func allow(next http.HandlerFunc, expectedRole []string) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		tokenString, err := libraries.GetTokenFromHeader(r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		role, err := libraries.GetRole(tokenString)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+
+		var found bool
+		for _, r := range expectedRole {
+			if role == r {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	}
+}
+
+func main() {
 	mux := http.NewServeMux()
 
 	fmt.Println("Server starting...")
 
 	// Start the server
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./images"))))
-	mux.HandleFunc("/hello", hello)
+	mux.HandleFunc("/", allow(hello, []string{"admin", "employee", "prestataire", "salary", "superadmin"}))
 	mux.HandleFunc("/faq", faq.Faq)
 	mux.HandleFunc("/db/create", db_handler.Create)
 	mux.HandleFunc("/db/select", db_handler.Select)
@@ -58,7 +109,9 @@ func main() {
 	mux.HandleFunc("/salary/deleteInfo", salary.DeleteSalaryInfo)
 	mux.HandleFunc("/salary/getInfos", salary.GetSalaryInfo)
 	mux.HandleFunc("/salary/addInfos", salary.AddSalaryInfo)
+
 	mux.HandleFunc("/list/infos", list.ListInfos)
+	mux.HandleFunc("/list/category", list.ListCategory)
 	mux.HandleFunc("/list/activity", list.ListActivities)
 
 	mux.HandleFunc("/activity/addActivity", activity.AddActivity)
@@ -138,10 +191,10 @@ func main() {
 	mux.HandleFunc("/material/addRental", material.AddRental)
 	mux.HandleFunc("/material/deleteRental", material.DeleteRental)
 
-	handler := cors.Default().Handler(mux)
-
+	//handler := cors.Default().Handler(mux)
+	handler := NewLogger(mux)
 	err := http.ListenAndServeTLS(":9000", "cert.pem", "key.pem", handler)
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		panic(err)
 	}
 }
