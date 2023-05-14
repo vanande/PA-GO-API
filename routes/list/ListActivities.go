@@ -97,7 +97,17 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 					lastC = c
 				}
 				if lastO.IdOption != o.IdOption {
-					res[len(res)-1].Options = append(res[len(res)-1].Options, o)
+					lastE := res[len(res)-1]
+					var alreadyHere bool = false
+					for _, opt := range lastE.Options {
+						if opt.IdOption == o.IdOption {
+							alreadyHere = true
+							break
+						}
+					}
+					if !alreadyHere {
+						res[len(res)-1].Options = append(res[len(res)-1].Options, o)
+					}
 					lastO = o
 				}
 			}
