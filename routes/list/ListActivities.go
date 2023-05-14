@@ -7,10 +7,6 @@ import (
 	"net/http"
 )
 
-func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-}
-
 type Category struct {
 	IdCategory   int    `json:"idCategory"`
 	CategoryNom  string `json:"nom"`
@@ -42,7 +38,7 @@ func ListActivities(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 
 	case "POST":
-		enableCors(&w)
+		libraries.EnableCors(&w)
 
 		// tables in the right order
 		tables := []string{"list_activite la", "list_option o", "category_activite ca", "category c"}
